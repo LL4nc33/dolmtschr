@@ -37,3 +37,5 @@ def test_system_prompt_fallback():
     assert "translator" in prompt
     assert "de" in prompt
     assert "en" in prompt
+    assert "{source}" not in prompt
+    assert "{target}" not in prompt

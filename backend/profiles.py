@@ -162,7 +162,7 @@ _PROFILE_MAP: dict[str, IndustryProfile] = {p.id: p for p in _PROFILES}
 
 
 def get_all_profiles() -> list[IndustryProfile]:
-    return _PROFILES
+    return list(_PROFILES)
 
 
 def get_profile(profile_id: str) -> IndustryProfile | None:

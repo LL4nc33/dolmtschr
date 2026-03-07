@@ -29,7 +29,8 @@ class OpenAICompatProvider(TranslateProvider):
         if not text.strip():
             return ""
 
-        custom_prompt: str | None = kwargs.get("system_prompt")  # type: ignore[assignment]
+        raw_prompt = kwargs.get("system_prompt")
+        custom_prompt: str | None = raw_prompt if isinstance(raw_prompt, str) else None
         if custom_prompt:
             system = custom_prompt  # bereits formatiert (source/target gefüllt)
         else:
