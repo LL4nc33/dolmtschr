@@ -34,6 +34,7 @@ def _session_to_response(session: Session, message_count: int = 0) -> SessionRes
         source_lang=session.source_lang,
         target_lang=session.target_lang,
         audio_enabled=session.audio_enabled,
+        profile_id=session.profile_id,
         message_count=message_count,
         created_at=session.created_at.isoformat(),
         updated_at=session.updated_at.isoformat(),
@@ -59,6 +60,15 @@ async def create_session(body: SessionCreate) -> SessionResponse:
                 if not body.audio_enabled:
                     audio_enabled = org.audio_enabled_default
 
+        # Profil-basierte Retention (hat Vorrang über Org-Policy wenn angegeben)
+        if body.profile_id:
+            from backend.profiles import get_profile
+            profile = get_profile(body.profile_id)
+            if profile:
+                expires_at = datetime.now(timezone.utc) + timedelta(
+                    days=profile.default_retention_days
+                )
+
         session = Session(
             source_lang=body.source_lang,
             target_lang=body.target_lang,
@@ -66,6 +76,7 @@ async def create_session(body: SessionCreate) -> SessionResponse:
             title=body.title,
             org_id=uuid.UUID(body.org_id) if body.org_id else None,
             expires_at=expires_at,
+            profile_id=body.profile_id,
         )
         db.add(session)
         await db.commit()

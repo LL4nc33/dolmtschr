@@ -34,6 +34,9 @@ class Session(Base):
     source_lang: Mapped[str] = mapped_column(String(10), nullable=False)
     target_lang: Mapped[str] = mapped_column(String(10), nullable=False)
     audio_enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    profile_id: Mapped[str | None] = mapped_column(
+        String(50), nullable=True, default="medical",
+    )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

@@ -161,6 +161,7 @@ class SessionCreate(BaseModel):
     audio_enabled: bool = False
     title: str | None = None
     org_id: str | None = None
+    profile_id: str | None = "medical"
 
 
 class SessionUpdate(BaseModel):
@@ -175,6 +176,7 @@ class SessionResponse(BaseModel):
     source_lang: str
     target_lang: str
     audio_enabled: bool
+    profile_id: str | None = None
     message_count: int = 0
     created_at: str
     updated_at: str
