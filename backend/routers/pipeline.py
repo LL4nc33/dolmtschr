@@ -158,6 +158,7 @@ async def full_pipeline(
     elevenlabs_stability: float | None = Query(None),
     elevenlabs_similarity: float | None = Query(None),
     session_id: str | None = Query(None),
+    profile_id: str | None = Query(None),  # Industry Profile für System-Prompt-Injection
 ) -> PipelineResponse:
     total_start = time.perf_counter()
 
@@ -170,13 +171,24 @@ async def full_pipeline(
     if not text.strip():
         raise HTTPException(status_code=400, detail="No speech detected")
 
-    # 2. Translate
+    # 2. Translate — mit optionalem Profil-System-Prompt
     t0 = time.perf_counter()
     translator, ad_hoc = resolve_translate(provider, api_url, api_key, model, ollama_url, deepl_free)
+
+    # System-Prompt aus Profil (falls angegeben, sonst Provider-Default)
+    translate_kwargs: dict[str, object] = {}
+    if ollama_keep_alive is not None:
+        translate_kwargs["keep_alive"] = ollama_keep_alive
+    if ollama_context_length is not None:
+        translate_kwargs["num_ctx"] = ollama_context_length
+    if profile_id:
+        from backend.profiles import get_system_prompt
+        translate_kwargs["system_prompt"] = get_system_prompt(profile_id, detected_lang, target_lang)
+
     try:
         translated = await translator.translate(
             text, detected_lang, target_lang, model,
-            keep_alive=ollama_keep_alive, num_ctx=ollama_context_length,
+            **translate_kwargs,
         )
     finally:
         if ad_hoc:
@@ -231,6 +243,7 @@ async def full_pipeline(
         "translate_ms": translate_ms,
         "tts_ms": tts_ms,
         "total_ms": duration_ms,
+        "profile_id": profile_id,
     })
 
     # Save to chat history (non-blocking)
