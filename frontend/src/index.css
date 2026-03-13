@@ -25,6 +25,7 @@
   transition: transform 0.15s ease, background-color 0.2s ease;
   color: var(--text);
   box-shadow: 4px 4px 0 var(--border);
+  touch-action: manipulation;
 }
 .record-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--border); }
 .record-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -53,7 +54,7 @@
 }
 @keyframes ripple {
   0% { transform: scale(0.85); opacity: 0.8; }
-  100% { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
 }
 
 /* ── Language Selector ─────────────────────────── */
@@ -93,10 +94,9 @@
 .lang-dropdown {
   position: absolute;
   top: calc(100% + 4px);
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   min-width: 180px;
-  max-height: 280px;
+  max-height: 60vh;
   overflow-y: auto;
   background: var(--bg);
   border: 2px solid var(--border);
@@ -153,7 +153,11 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  padding: 2px 4px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 0;
   color: inherit;
   opacity: 0.7;
@@ -161,5 +165,4 @@
 .bubble-copy:hover, .bubble-play:hover { opacity: 1; }
 .bubble-play {
   font-size: 20px;
-  padding: 4px 8px;
 }

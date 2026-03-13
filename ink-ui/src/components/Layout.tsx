@@ -68,7 +68,7 @@ export function Layout({
   className = '',
 }: LayoutProps) {
   const mainContent = (
-    <main className={`flex-1 px-6 py-8 ${maxWidth} w-full mx-auto`}>
+    <main className={`flex-1 px-3 py-4 md:px-6 md:py-8 ${maxWidth} w-full mx-auto`}>
       {children}
     </main>
   )
@@ -80,13 +80,13 @@ export function Layout({
     >
       {/* WHY: Header uses a thin bottom border for clean Kindle-style separation. */}
       <header
-        className="px-6 py-6 flex items-center justify-between"
+        className="px-3 py-3 md:px-6 md:py-6 flex items-center justify-between"
         style={{ borderBottom: '1px solid var(--border)' }}
       >
         <div className="flex items-center gap-4">
           {headerLeft}
           {title && (
-            <h1 className="font-serif text-2xl font-light tracking-wider leading-tight">
+            <h1 className="font-serif text-xl md:text-2xl font-light tracking-wider leading-tight">
               {title}
             </h1>
           )}
@@ -117,7 +117,7 @@ export function Layout({
       {/* WHY: Footer with thin top border mirrors the header for symmetry. */}
       {footer && (
         <footer
-          className="px-6 py-3 text-center font-mono text-xs flex items-center justify-center gap-1"
+          className="px-3 py-2 md:px-6 md:py-3 text-center font-mono text-xs flex items-center justify-center gap-1"
           style={{
             borderTop: '1px solid var(--border)',
             color: 'var(--text-secondary)',

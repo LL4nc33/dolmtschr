@@ -3,7 +3,7 @@ import { Layout, DarkModeToggle, InstallPrompt, Button } from '@oidanice/ink-ui'
 import { useSettings } from './hooks/useSettings'
 import { useSession } from './hooks/useSession'
 import { useMessages } from './hooks/useMessages'
-import { getMessages, listSessions, deleteSession, SessionResponse } from './api/dolmtschr'
+import { getMessages, listSessions, deleteSession, getLanguageCoverage, SessionResponse, type LanguageCoverage } from './api/dolmtschr'
 import { Home } from './pages/Home'
 import { Settings } from './pages/Settings'
 import { ChatSidebar } from './components/ChatSidebar'
@@ -19,6 +19,7 @@ export function App() {
   const { settings, update } = useSettings()
   const { session, create: createSession, load: loadSession, clear: clearSession } = useSession()
   const { messages, append: appendMessage, clear: clearMessages } = useMessages()
+  const [coverage, setCoverage] = useState<LanguageCoverage | undefined>(undefined)
 
   const refreshSessions = useCallback(async () => {
     setSessionsLoading(true)
@@ -33,6 +34,12 @@ export function App() {
   useEffect(() => {
     refreshSessions()
   }, [refreshSessions])
+
+  useEffect(() => {
+    getLanguageCoverage(settings.ttsChain, settings.translateChain)
+      .then(setCoverage)
+      .catch(() => {})
+  }, [settings.ttsChain, settings.translateChain])
 
   const handleNewSession = useCallback(async () => {
     const s = await createSession(
@@ -91,7 +98,7 @@ export function App() {
       <Layout
         headerLeft={
           <button
-            className="md:hidden border-0 bg-transparent cursor-pointer p-1 font-mono text-base"
+            className="md:hidden border-0 bg-transparent cursor-pointer p-2 font-mono text-base min-w-[44px] min-h-[44px] flex items-center justify-center"
             style={{ color: 'var(--text)' }}
             onClick={() => setSidebarOpen(true)}
             aria-label="Open sidebar"
@@ -101,7 +108,7 @@ export function App() {
         }
         title="dolmtschr"
         headerRight={
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Button
               variant={page === 'home' ? 'primary' : 'ghost'}
               className="text-xs"
@@ -162,6 +169,7 @@ export function App() {
               sessionTitle={session?.title ?? null}
               messages={messages}
               historyEnabled={settings.historyEnabled}
+              coverage={coverage}
               onEndSession={handleEndSession}
               onMessageAppend={appendMessage}
               onAutoSession={async (id) => {
@@ -171,56 +179,7 @@ export function App() {
             />
           )}
           {page === 'settings' && (
-            <Settings
-              ttsEnabled={settings.ttsEnabled}
-              onTtsChange={(enabled) => update({ ttsEnabled: enabled })}
-              ttsProvider={settings.ttsProvider}
-              onTtsProviderChange={(provider) => update({ ttsProvider: provider })}
-              piperVoice={settings.piperVoice}
-              onPiperVoiceChange={(voice) => update({ piperVoice: voice })}
-              chatterboxVoice={settings.chatterboxVoice}
-              onChatterboxVoiceChange={(voice) => update({ chatterboxVoice: voice })}
-              chatterboxUrl={settings.chatterboxUrl}
-              onChatterboxUrlChange={(url) => update({ chatterboxUrl: url })}
-              ollamaModel={settings.ollamaModel}
-              onOllamaModelChange={(model) => update({ ollamaModel: model })}
-              ollamaUrl={settings.ollamaUrl}
-              onOllamaUrlChange={(url) => update({ ollamaUrl: url })}
-              translateProvider={settings.translateProvider}
-              onTranslateProviderChange={(provider) => update({ translateProvider: provider })}
-              openaiUrl={settings.openaiUrl}
-              onOpenaiUrlChange={(url) => update({ openaiUrl: url })}
-              openaiKey={settings.openaiKey}
-              onOpenaiKeyChange={(key) => update({ openaiKey: key })}
-              openaiModel={settings.openaiModel}
-              onOpenaiModelChange={(model) => update({ openaiModel: model })}
-              chatterboxExaggeration={settings.chatterboxExaggeration}
-              onChatterboxExaggerationChange={(v) => update({ chatterboxExaggeration: v })}
-              chatterboxCfgWeight={settings.chatterboxCfgWeight}
-              onChatterboxCfgWeightChange={(v) => update({ chatterboxCfgWeight: v })}
-              chatterboxTemperature={settings.chatterboxTemperature}
-              onChatterboxTemperatureChange={(v) => update({ chatterboxTemperature: v })}
-              autoPlay={settings.autoPlay}
-              onAutoPlayChange={(v) => update({ autoPlay: v })}
-              ollamaKeepAlive={settings.ollamaKeepAlive}
-              onOllamaKeepAliveChange={(v) => update({ ollamaKeepAlive: v })}
-              ollamaContextLength={settings.ollamaContextLength}
-              onOllamaContextLengthChange={(v) => update({ ollamaContextLength: v })}
-              deepLKey={settings.deepLKey}
-              onDeepLKeyChange={(v) => update({ deepLKey: v })}
-              deepLFree={settings.deepLFree}
-              onDeepLFreeChange={(v) => update({ deepLFree: v })}
-              elevenlabsKey={settings.elevenlabsKey}
-              onElevenlabsKeyChange={(v) => update({ elevenlabsKey: v })}
-              elevenlabsModel={settings.elevenlabsModel}
-              onElevenlabsModelChange={(v) => update({ elevenlabsModel: v })}
-              elevenlabsVoiceId={settings.elevenlabsVoiceId}
-              onElevenlabsVoiceIdChange={(v) => update({ elevenlabsVoiceId: v })}
-              elevenlabsStability={settings.elevenlabsStability}
-              onElevenlabsStabilityChange={(v) => update({ elevenlabsStability: v })}
-              elevenlabsSimilarity={settings.elevenlabsSimilarity}
-              onElevenlabsSimilarityChange={(v) => update({ elevenlabsSimilarity: v })}
-            />
+            <Settings settings={settings} update={update} />
           )}
         </div>
       </Layout>

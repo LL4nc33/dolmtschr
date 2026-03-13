@@ -35,8 +35,8 @@ function OriginalBubble({ text, lang, sttMs }: { text: string; lang: string; stt
   const clip = useClipboard()
   return (
     <div className="flex justify-start">
-      <div className="bubble bubble--original max-w-[85%]">
-        <p className="text-base leading-relaxed">{text}</p>
+      <div className="bubble bubble--original max-w-[95%] md:max-w-[85%]">
+        <p className="text-lg md:text-base leading-relaxed">{text}</p>
         <div className="bubble-footer">
           <span>{lang.toUpperCase()}{sttMs != null && ` · ${(sttMs / 1000).toFixed(1)}s STT`}</span>
           <button className="bubble-copy" onClick={() => clip.copy(text)} aria-label="Copy">
@@ -86,9 +86,9 @@ function TranslationBubble({ text, lang, audioBase64, audioFormat, autoPlay, tra
 
   return (
     <div className="flex justify-end">
-      <div className="bubble bubble--translation max-w-[85%]">
+      <div className="bubble bubble--translation max-w-[95%] md:max-w-[85%]">
         <div className="flex items-start gap-2">
-          <p className="text-base leading-relaxed flex-1">{text}</p>
+          <p className="text-lg md:text-base leading-relaxed flex-1">{text}</p>
           {audioBase64 && (
             <button className="bubble-play" onClick={play} aria-label={playing ? 'Playing' : 'Play'}>
               {playing ? '⏸' : '▶'}

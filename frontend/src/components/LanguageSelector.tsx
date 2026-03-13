@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import type { LanguageCoverage } from '../api/dolmtschr'
 
 // Inline SVG flag components — consistent across platforms, no emoji rendering issues
 function FlagSvg({ code, size = 24 }: { code: string; size?: number }) {
@@ -185,9 +186,10 @@ interface LanguageSelectorProps {
   targetLang: string
   onSourceChange: (lang: string) => void
   onTargetChange: (lang: string) => void
+  coverage?: LanguageCoverage
 }
 
-export function LanguageSelector({ sourceLang, targetLang, onSourceChange, onTargetChange }: LanguageSelectorProps) {
+export function LanguageSelector({ sourceLang, targetLang, onSourceChange, onTargetChange, coverage }: LanguageSelectorProps) {
   const [swapped, setSwapped] = useState(false)
 
   const swap = () => {
@@ -197,28 +199,44 @@ export function LanguageSelector({ sourceLang, targetLang, onSourceChange, onTar
     onTargetChange(sourceLang)
   }
 
+  // Show hint when selected target language is text-only
+  const targetEntry = coverage?.languages[targetLang]
+  const isTextOnly = targetEntry?.tts_badge === 'text-only'
+
   return (
-    <div className="flex items-center justify-center gap-2">
-      <LangChip
-        value={sourceLang}
-        onChange={onSourceChange}
-        options={LANGUAGES}
-        placeholder="Auto"
-      />
-      <button
-        className="lang-swap-btn"
-        onClick={swap}
-        disabled={!sourceLang}
-        aria-label="Swap languages"
-        style={{ transform: swapped ? 'rotate(180deg)' : 'rotate(0deg)' }}
-      >
-        ⇄
-      </button>
-      <LangChip
-        value={targetLang}
-        onChange={onTargetChange}
-        options={TARGET_LANGUAGES}
-      />
+    <div className="sticky top-0 z-40 flex flex-col items-center gap-1 py-2 -mx-3 px-3 md:-mx-0 md:px-0" style={{ backgroundColor: 'var(--bg)', backdropFilter: 'blur(8px)' }}>
+      <div className="flex items-center justify-center gap-2">
+        <LangChip
+          value={sourceLang}
+          onChange={onSourceChange}
+          options={LANGUAGES}
+          placeholder="Auto"
+          coverage={coverage}
+        />
+        <button
+          className="lang-swap-btn"
+          onClick={swap}
+          disabled={!sourceLang}
+          aria-label="Swap languages"
+          style={{ transform: swapped ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        >
+          ⇄
+        </button>
+        <LangChip
+          value={targetLang}
+          onChange={onTargetChange}
+          options={TARGET_LANGUAGES}
+          coverage={coverage}
+        />
+      </div>
+      {isTextOnly && (
+        <span
+          className="font-mono text-xs"
+          style={{ color: 'var(--text-secondary)', opacity: 0.7 }}
+        >
+          kein TTS-Provider fuer diese Sprache — nur Textausgabe
+        </span>
+      )}
     </div>
   )
 }
@@ -228,9 +246,30 @@ interface LangChipProps {
   onChange: (code: string) => void
   options: typeof LANGUAGES
   placeholder?: string
+  coverage?: LanguageCoverage
 }
 
-function LangChip({ value, onChange, options, placeholder }: LangChipProps) {
+function TtsBadge({ badge }: { badge: 'voice' | 'text-only' }) {
+  const isVoice = badge === 'voice'
+  return (
+    <span
+      className="font-mono"
+      style={{
+        fontSize: 9,
+        padding: '1px 3px',
+        borderRadius: 2,
+        backgroundColor: isVoice ? 'var(--accent, #6366f1)' : 'var(--bg-secondary, rgba(0,0,0,0.05))',
+        color: isVoice ? '#fff' : 'var(--text-secondary)',
+        opacity: isVoice ? 1 : 0.6,
+        lineHeight: 1,
+      }}
+    >
+      {isVoice ? 'voice' : 'text'}
+    </span>
+  )
+}
+
+function LangChip({ value, onChange, options, placeholder, coverage }: LangChipProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -263,6 +302,9 @@ function LangChip({ value, onChange, options, placeholder }: LangChipProps) {
               {l.code ? <FlagSvg code={l.code} size={22} /> : <GlobeIcon size={20} />}
               <span>{l.label}</span>
               {l.code && <span className="font-mono text-xs" style={{ opacity: 0.5 }}>{l.code.toUpperCase()}</span>}
+              {l.code && coverage?.languages[l.code] && (
+                <TtsBadge badge={coverage.languages[l.code].tts_badge} />
+              )}
             </button>
           ))}
         </div>

@@ -7,12 +7,12 @@ interface ResultActionsProps {
 
 export function ResultActions({ onRetry, onReset }: ResultActionsProps) {
   return (
-    <div className="flex gap-2">
-      <Button className="flex-1" onClick={onRetry}>
-        [ retry ]
-      </Button>
-      <Button variant="ghost" className="flex-1" onClick={onReset}>
+    <div className="flex flex-col md:flex-row gap-2">
+      <Button className="flex-1 min-h-[48px]" onClick={onReset}>
         [ new recording ]
+      </Button>
+      <Button variant="ghost" className="md:flex-1 min-h-[44px]" onClick={onRetry}>
+        [ retry ]
       </Button>
     </div>
   )

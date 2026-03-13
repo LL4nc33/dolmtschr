@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 import { Progress } from '@oidanice/ink-ui'
-import { pipeline, ProviderOptions, warmupGpu, SynthesisParams, ElevenLabsParams, MessageResponse, createSession, updateSession } from '../api/dolmtschr'
+import { pipeline, ProviderOptions, warmupGpu, SynthesisParams, ElevenLabsParams, MessageResponse, createSession, updateSession, type LanguageCoverage } from '../api/dolmtschr'
 import { PipelineRecorder } from '../components/PipelineRecorder'
 import { TranscriptBubble } from '../components/TranscriptBubble'
 import { LanguageSelector } from '../components/LanguageSelector'
@@ -38,6 +38,7 @@ interface HomeProps {
   elevenlabsStability: number
   elevenlabsSimilarity: number
   historyEnabled: boolean
+  coverage?: LanguageCoverage
   onSourceChange: (lang: string) => void
   onTargetChange: (lang: string) => void
   sessionId: string | null
@@ -62,7 +63,7 @@ interface Result {
   ttsMs: number | null
 }
 
-export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoice, chatterboxVoice, chatterboxUrl, ollamaModel, ollamaUrl, translateProvider, openaiUrl, openaiKey, openaiModel, chatterboxExaggeration, chatterboxCfgWeight, chatterboxTemperature, autoPlay, ollamaKeepAlive, ollamaContextLength, deepLKey, deepLFree, elevenlabsKey, elevenlabsModel, elevenlabsVoiceId, elevenlabsStability, elevenlabsSimilarity, historyEnabled, onSourceChange, onTargetChange, sessionId, sessionTitle, messages, onEndSession, onMessageAppend, onAutoSession }: HomeProps) {
+export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoice, chatterboxVoice, chatterboxUrl, ollamaModel, ollamaUrl, translateProvider, openaiUrl, openaiKey, openaiModel, chatterboxExaggeration, chatterboxCfgWeight, chatterboxTemperature, autoPlay, ollamaKeepAlive, ollamaContextLength, deepLKey, deepLFree, elevenlabsKey, elevenlabsModel, elevenlabsVoiceId, elevenlabsStability, elevenlabsSimilarity, historyEnabled, coverage, onSourceChange, onTargetChange, sessionId, sessionTitle, messages, onEndSession, onMessageAppend, onAutoSession }: HomeProps) {
   const [phase, setPhase] = useState<Phase>('idle')
   const [result, setResult] = useState<Result | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -197,7 +198,7 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
   const inSession = sessionId !== null
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 md:space-y-4">
       {inSession && (
         <SessionBar
           sessionId={sessionId}
@@ -212,6 +213,7 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
         targetLang={targetLang}
         onSourceChange={onSourceChange}
         onTargetChange={onTargetChange}
+        coverage={coverage}
       />
 
       {inSession && messages.length > 0 && (
