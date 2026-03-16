@@ -12,6 +12,8 @@ _session_factory: async_sessionmaker[AsyncSession] | None = None
 
 async def init_db(database_url: str) -> None:
     """Create the async engine and session factory."""
+    if not database_url:
+        raise RuntimeError("DATABASE_URL not configured — set it in .env")
     global _engine, _session_factory
     _engine = create_async_engine(database_url, echo=False, pool_size=5, max_overflow=10)
     _session_factory = async_sessionmaker(_engine, expire_on_commit=False)

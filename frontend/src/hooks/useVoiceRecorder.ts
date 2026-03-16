@@ -24,6 +24,7 @@ export function useVoiceRecorder() {
   const chunks = useRef<Blob[]>([])
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const audioUrlRef = useRef<string | null>(null)
+  const startingRef = useRef(false)
 
   const clearTimer = useCallback(() => {
     if (timerRef.current !== null) {
@@ -40,10 +41,13 @@ export function useVoiceRecorder() {
   }, [])
 
   const start = useCallback(async () => {
+    if (startingRef.current) return
+    startingRef.current = true
     try {
       revokeUrl()
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      startingRef.current = false
       const recorder = new MediaRecorder(stream, {
         mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
           ? 'audio/webm;codecs=opus'
@@ -80,6 +84,7 @@ export function useVoiceRecorder() {
         setState((prev) => ({ ...prev, duration: prev.duration + 1 }))
       }, 1000)
     } catch {
+      startingRef.current = false
       setState({ ...INITIAL_STATE, stream: null, error: 'Microphone access denied' })
     }
   }, [clearTimer, revokeUrl])

@@ -28,8 +28,9 @@ export function MessageBubble({ message, sessionId }: MessageBubbleProps) {
     audio.onplay = () => setPlaying(true)
     audio.onpause = () => setPlaying(false)
     audio.onended = () => setPlaying(false)
+    audio.onerror = () => setPlaying(false)
     audioRef.current = audio
-    audio.play()
+    audio.play().catch(() => setPlaying(false))
   }, [message.audio_path, message.id, sessionId])
 
   const copyText = message.translated_text || message.original_text

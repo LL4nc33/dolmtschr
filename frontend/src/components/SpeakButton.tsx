@@ -22,8 +22,9 @@ export function SpeakButton({ audioBase64, audioFormat = 'wav', autoPlay }: Spea
     audio.onplay = () => setIsPlaying(true)
     audio.onpause = () => setIsPlaying(false)
     audio.onended = () => setIsPlaying(false)
+    audio.onerror = () => setIsPlaying(false)
     audioRef.current = audio
-    audio.play()
+    audio.play().catch(() => setIsPlaying(false))
   }, [audioBase64, audioFormat])
 
   const handleDownload = useCallback(() => {

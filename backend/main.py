@@ -12,7 +12,7 @@ from fastapi.responses import FileResponse
 from backend.config import Settings
 from backend.dependencies import init_providers, get_stt, get_tts, get_translate
 from backend.providers import create_stt, create_tts, create_translate
-from backend.routers import stt, tts, translate, pipeline, config, sessions, messages, search, retention
+from backend.routers import stt, tts, translate, pipeline, config, sessions, messages, search, retention, languages
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -85,9 +85,10 @@ _version = _version_file.read_text().strip() if _version_file.exists() else "0.0
 
 app = FastAPI(title="dolmtschr", version=_version, lifespan=lifespan)
 
+_settings = Settings()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_settings.cors_origins.split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -102,6 +103,7 @@ app.include_router(sessions.router)
 app.include_router(messages.router)
 app.include_router(search.router)
 app.include_router(retention.router)
+app.include_router(languages.router)
 
 # Gateway (v1 API for external clients)
 if Settings().gateway_enabled:

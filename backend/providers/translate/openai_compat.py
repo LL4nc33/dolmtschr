@@ -52,9 +52,12 @@ class OpenAICompatProvider(TranslateProvider):
         except httpx.HTTPStatusError as e:
             logger.error("OpenAI-compat returned %s: %s", e.response.status_code, e.response.text[:200])
             raise RuntimeError(f"Translation failed: OpenAI-compat {e.response.status_code}") from e
-        except httpx.ConnectError:
+        except httpx.ConnectError as e:
             logger.error("Cannot reach OpenAI-compat API at %s", self._base_url)
-            raise RuntimeError(f"Translation failed: cannot reach API at {self._base_url}")
+            raise RuntimeError(f"Provider unreachable: cannot reach API at {self._base_url}") from e
+        except httpx.TimeoutException as e:
+            logger.error("OpenAI-compat request timed out at %s", self._base_url)
+            raise RuntimeError(f"Provider timeout: API at {self._base_url}") from e
 
         data = response.json()
         return data["choices"][0]["message"]["content"].strip()

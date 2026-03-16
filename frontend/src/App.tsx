@@ -11,8 +11,12 @@ import { Footer } from './components/Footer'
 
 type Page = 'home' | 'settings'
 
+function getPageFromHash(): Page {
+  return window.location.hash === '#settings' ? 'settings' : 'home'
+}
+
 export function App() {
-  const [page, setPage] = useState<Page>('home')
+  const [page, setPage] = useState<Page>(getPageFromHash)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sessions, setSessions] = useState<SessionResponse[]>([])
   const [sessionsLoading, setSessionsLoading] = useState(true)
@@ -20,6 +24,17 @@ export function App() {
   const { session, create: createSession, load: loadSession, clear: clearSession } = useSession()
   const { messages, append: appendMessage, clear: clearMessages } = useMessages()
   const [coverage, setCoverage] = useState<LanguageCoverage | undefined>(undefined)
+
+  const navigate = useCallback((p: Page) => {
+    window.location.hash = p === 'home' ? '' : p
+    setPage(p)
+  }, [])
+
+  useEffect(() => {
+    const onHash = () => setPage(getPageFromHash())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
 
   const refreshSessions = useCallback(async () => {
     setSessionsLoading(true)
@@ -50,19 +65,19 @@ export function App() {
     if (s) {
       clearMessages()
       await refreshSessions()
-      setPage('home')
+      navigate('home')
       setSidebarOpen(false)
     }
-  }, [createSession, settings.sourceLang, settings.targetLang, settings.ttsEnabled, clearMessages, refreshSessions])
+  }, [createSession, settings.sourceLang, settings.targetLang, settings.ttsEnabled, clearMessages, refreshSessions, navigate])
 
   const handleSelectSession = useCallback(async (id: string) => {
     await loadSession(id)
     const data = await getMessages(id)
     clearMessages()
     data.messages.forEach(appendMessage)
-    setPage('home')
+    navigate('home')
     setSidebarOpen(false)
-  }, [loadSession, clearMessages, appendMessage])
+  }, [loadSession, clearMessages, appendMessage, navigate])
 
   const handleDeleteSession = useCallback(async (id: string) => {
     setSessions((prev) => prev.filter((s) => s.id !== id))
@@ -112,14 +127,14 @@ export function App() {
             <Button
               variant={page === 'home' ? 'primary' : 'ghost'}
               className="text-xs"
-              onClick={() => setPage('home')}
+              onClick={() => navigate('home')}
             >
               [ home ]
             </Button>
             <Button
               variant={page === 'settings' ? 'primary' : 'ghost'}
               className="text-xs"
-              onClick={() => setPage('settings')}
+              onClick={() => navigate('settings')}
             >
               [ settings ]
             </Button>
@@ -137,39 +152,13 @@ export function App() {
         <div className="max-w-4xl mx-auto">
           {page === 'home' && (
             <Home
-              sourceLang={settings.sourceLang}
-              targetLang={settings.targetLang}
-              ttsEnabled={settings.ttsEnabled}
-              ttsProvider={settings.ttsProvider}
-              piperVoice={settings.piperVoice}
-              chatterboxVoice={settings.chatterboxVoice}
-              chatterboxUrl={settings.chatterboxUrl}
-              ollamaModel={settings.ollamaModel}
-              ollamaUrl={settings.ollamaUrl}
-              translateProvider={settings.translateProvider}
-              openaiUrl={settings.openaiUrl}
-              openaiKey={settings.openaiKey}
-              openaiModel={settings.openaiModel}
-              chatterboxExaggeration={settings.chatterboxExaggeration}
-              chatterboxCfgWeight={settings.chatterboxCfgWeight}
-              chatterboxTemperature={settings.chatterboxTemperature}
-              autoPlay={settings.autoPlay}
-              ollamaKeepAlive={settings.ollamaKeepAlive}
-              ollamaContextLength={settings.ollamaContextLength}
-              deepLKey={settings.deepLKey}
-              deepLFree={settings.deepLFree}
-              elevenlabsKey={settings.elevenlabsKey}
-              elevenlabsModel={settings.elevenlabsModel}
-              elevenlabsVoiceId={settings.elevenlabsVoiceId}
-              elevenlabsStability={settings.elevenlabsStability}
-              elevenlabsSimilarity={settings.elevenlabsSimilarity}
+              settings={settings}
+              coverage={coverage}
               onSourceChange={(lang) => update({ sourceLang: lang })}
               onTargetChange={(lang) => update({ targetLang: lang })}
               sessionId={session?.id ?? null}
               sessionTitle={session?.title ?? null}
               messages={messages}
-              historyEnabled={settings.historyEnabled}
-              coverage={coverage}
               onEndSession={handleEndSession}
               onMessageAppend={appendMessage}
               onAutoSession={async (id) => {

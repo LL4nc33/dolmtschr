@@ -10,8 +10,12 @@ models/
 *.log
 .serena/
 .playwright-mcp/
-workflow/
-memory/
+.mcp.json
+benchmarks/
 docs/DEVLOG.md
 docs/decisions/
-benchmarks/
+
+# CWE (Code Workspace Engine)
+memory/
+workflow/
+VERSION

@@ -58,6 +58,11 @@ export function RecordButton({ isRecording, duration, disabled, onStart, onStop 
           )}
         </button>
       </div>
+      {!isRecording && !disabled && (
+        <span className="font-mono text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
+          tap to speak · space
+        </span>
+      )}
     </div>
   )
 }

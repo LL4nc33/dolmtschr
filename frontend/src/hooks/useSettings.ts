@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-interface AppSettings {
+export interface AppSettings {
   sourceLang: string
   targetLang: string
   ttsEnabled: boolean
@@ -28,6 +28,9 @@ interface AppSettings {
   elevenlabsStability: number
   elevenlabsSimilarity: number
   historyEnabled: boolean
+  ttsChain: string[]
+  translateChain: string[]
+  deeplPlan: 'free' | 'pro'
 }
 
 const OLD_STORAGE_KEY = 'inkonnect-settings'
@@ -71,6 +74,9 @@ const DEFAULTS: AppSettings = {
   elevenlabsStability: 0.5,
   elevenlabsSimilarity: 0.75,
   historyEnabled: true,
+  ttsChain: ['chatterbox', 'piper', 'elevenlabs'],
+  translateChain: ['ollama', 'deepl'],
+  deeplPlan: 'free',
 }
 
 function load(): AppSettings {

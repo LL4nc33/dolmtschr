@@ -64,8 +64,9 @@ function TranslationBubble({ text, lang, audioBase64, audioFormat, autoPlay, tra
     audio.onplay = () => setPlaying(true)
     audio.onended = () => setPlaying(false)
     audio.onpause = () => setPlaying(false)
+    audio.onerror = () => setPlaying(false)
     audioRef.current = audio
-    audio.play()
+    audio.play().catch(() => setPlaying(false))
   }, [audioBase64, audioFormat])
 
   useEffect(() => {

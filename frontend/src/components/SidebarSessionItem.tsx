@@ -23,7 +23,7 @@ export function SidebarSessionItem({ session, active, onSelect, onDelete }: Side
 
   return (
     <button
-      className="w-full text-left px-3 py-2 cursor-pointer border-0 rounded"
+      className="group w-full text-left px-3 py-2 cursor-pointer border-0 rounded"
       style={{
         backgroundColor: active ? 'var(--bg-secondary)' : 'transparent',
         borderLeft: active ? '2px solid var(--text)' : '2px solid transparent',
@@ -35,8 +35,7 @@ export function SidebarSessionItem({ session, active, onSelect, onDelete }: Side
         <span className="font-serif text-sm leading-snug truncate">{title}</span>
         <Button
           variant="ghost"
-          className="font-mono text-xs px-1 py-0 shrink-0 opacity-0 group-hover:opacity-100"
-          style={{ opacity: active ? 1 : undefined }}
+          className="font-mono text-xs px-1 py-0 shrink-0 opacity-40 hover:opacity-100 group-hover:opacity-100"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation()
             onDelete(session.id)

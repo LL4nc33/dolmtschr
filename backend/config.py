@@ -34,6 +34,21 @@ class Settings(BaseSettings):
     elevenlabs_model: str = "eleven_multilingual_v2"
     elevenlabs_voice_id: str = ""
 
+    # Provider Chains (comma-separated, priority order)
+    tts_chain: str = "chatterbox,piper,elevenlabs"
+    translate_chain: str = "ollama,deepl"
+
+    @property
+    def tts_chain_list(self) -> list[str]:
+        return [p.strip() for p in self.tts_chain.split(",") if p.strip()]
+
+    @property
+    def translate_chain_list(self) -> list[str]:
+        return [p.strip() for p in self.translate_chain.split(",") if p.strip()]
+
+    # CORS
+    cors_origins: str = "http://localhost:5173,http://localhost:4173"
+
     # Gateway
     gateway_enabled: bool = True
     gateway_api_keys: str = ""          # comma-separated, empty = no auth
@@ -41,7 +56,7 @@ class Settings(BaseSettings):
     gateway_max_audio_mb: int = 25      # max upload size in MB
 
     # Database
-    database_url: str = "postgresql+asyncpg://dolmtschr:dolmtschr_dev@localhost:5432/dolmtschr"
+    database_url: str = ""
 
     # Chat History
     history_enabled: bool = True

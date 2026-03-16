@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 import { Progress } from '@oidanice/ink-ui'
+import type { AppSettings } from '../hooks/useSettings'
 import { pipeline, ProviderOptions, warmupGpu, SynthesisParams, ElevenLabsParams, MessageResponse, createSession, updateSession, type LanguageCoverage } from '../api/dolmtschr'
 import { PipelineRecorder } from '../components/PipelineRecorder'
 import { TranscriptBubble } from '../components/TranscriptBubble'
@@ -11,33 +12,7 @@ import { MessageFeed } from '../components/MessageFeed'
 import { useKeyboardShortcut } from '../hooks/useKeyboardShortcut'
 
 interface HomeProps {
-  sourceLang: string
-  targetLang: string
-  ttsEnabled: boolean
-  ttsProvider: string
-  piperVoice: string
-  chatterboxVoice: string
-  chatterboxUrl: string
-  ollamaModel: string
-  ollamaUrl: string
-  translateProvider: string
-  openaiUrl: string
-  openaiKey: string
-  openaiModel: string
-  chatterboxExaggeration: number
-  chatterboxCfgWeight: number
-  chatterboxTemperature: number
-  autoPlay: boolean
-  ollamaKeepAlive: string
-  ollamaContextLength: string
-  deepLKey: string
-  deepLFree: boolean
-  elevenlabsKey: string
-  elevenlabsModel: string
-  elevenlabsVoiceId: string
-  elevenlabsStability: number
-  elevenlabsSimilarity: number
-  historyEnabled: boolean
+  settings: AppSettings
   coverage?: LanguageCoverage
   onSourceChange: (lang: string) => void
   onTargetChange: (lang: string) => void
@@ -63,7 +38,8 @@ interface Result {
   ttsMs: number | null
 }
 
-export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoice, chatterboxVoice, chatterboxUrl, ollamaModel, ollamaUrl, translateProvider, openaiUrl, openaiKey, openaiModel, chatterboxExaggeration, chatterboxCfgWeight, chatterboxTemperature, autoPlay, ollamaKeepAlive, ollamaContextLength, deepLKey, deepLFree, elevenlabsKey, elevenlabsModel, elevenlabsVoiceId, elevenlabsStability, elevenlabsSimilarity, historyEnabled, coverage, onSourceChange, onTargetChange, sessionId, sessionTitle, messages, onEndSession, onMessageAppend, onAutoSession }: HomeProps) {
+export function Home({ settings, coverage, onSourceChange, onTargetChange, sessionId, sessionTitle, messages, onEndSession, onMessageAppend, onAutoSession }: HomeProps) {
+  const { sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoice, chatterboxVoice, chatterboxUrl, ollamaModel, ollamaUrl, translateProvider, openaiUrl, openaiKey, openaiModel, chatterboxExaggeration, chatterboxCfgWeight, chatterboxTemperature, autoPlay, ollamaKeepAlive, ollamaContextLength, deepLKey, deepLFree, elevenlabsKey, elevenlabsModel, elevenlabsVoiceId, elevenlabsStability, elevenlabsSimilarity, historyEnabled } = settings
   const [phase, setPhase] = useState<Phase>('idle')
   const [result, setResult] = useState<Result | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -81,7 +57,7 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
     setSpaceToggle((n) => n + 1)
   }, [])
 
-  useKeyboardShortcut(' ', handleSpaceToggle, phase === 'idle')
+  useKeyboardShortcut(' ', handleSpaceToggle, phase === 'idle' || phase === 'result')
 
   const handleProcess = async (blob: Blob) => {
     lastBlob.current = blob
@@ -166,6 +142,8 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
       const msg = err instanceof Error ? err.message : ''
       if (msg.includes('No speech detected')) {
         setPhase('idle')
+        setStatusMessage('No speech detected — try again')
+        setTimeout(() => setStatusMessage(''), 3000)
         lastBlob.current = null
         return
       }
@@ -190,6 +168,7 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
     setAutoStart(false)
     setResult(null)
     setError(null)
+    setPhase('idle')
     if (translateProvider === 'local') {
       warmupGpu('ollama', ollamaUrl || undefined, ollamaKeepAlive || undefined).catch(() => {})
     }
@@ -220,7 +199,7 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
         <MessageFeed messages={messages} sessionId={sessionId} />
       )}
 
-      {phase !== 'processing' && phase !== 'result' && phase !== 'error' && (
+      {phase !== 'processing' && phase !== 'error' && (
         <PipelineRecorder
           onProcess={handleProcess}
           disabled={false}
@@ -229,6 +208,12 @@ export function Home({ sourceLang, targetLang, ttsEnabled, ttsProvider, piperVoi
           onRecordingChange={handleRecordingChange}
           triggerToggle={spaceToggle}
         />
+      )}
+
+      {statusMessage && phase === 'idle' && (
+        <p className="text-center font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>
+          {statusMessage}
+        </p>
       )}
 
       {phase === 'processing' && <Progress label="Processing..." />}

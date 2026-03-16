@@ -165,7 +165,14 @@ async def full_pipeline(
     # 1. STT
     t0 = time.perf_counter()
     audio = await file.read()
-    text, detected_lang = await get_stt().transcribe(audio, source_lang)
+    try:
+        text, detected_lang = await get_stt().transcribe(audio, source_lang)
+    except Exception as exc:
+        logger.error("STT transcription failed: %s", exc)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Speech-to-text failed: {exc}",
+        ) from exc
     stt_ms = int((time.perf_counter() - t0) * 1000)
 
     if not text.strip():
@@ -217,6 +224,9 @@ async def full_pipeline(
                 similarity_boost=elevenlabs_similarity,
             )
             audio_b64 = base64.b64encode(audio_bytes).decode()
+        except Exception as exc:
+            logger.error("TTS failed, returning text without audio: %s", exc)
+            audio_b64 = None
         finally:
             if tts_ad_hoc:
                 await tts_impl.cleanup()

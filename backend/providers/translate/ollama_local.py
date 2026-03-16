@@ -57,9 +57,12 @@ class OllamaLocalProvider(TranslateProvider):
         except httpx.HTTPStatusError as e:
             logger.error("Ollama returned %s: %s", e.response.status_code, e.response.text[:200])
             raise RuntimeError(f"Translation failed: Ollama {e.response.status_code}") from e
-        except httpx.ConnectError:
+        except httpx.ConnectError as e:
             logger.error("Cannot reach Ollama at %s", self._base_url)
-            raise RuntimeError(f"Translation failed: cannot reach Ollama at {self._base_url}")
+            raise RuntimeError(f"Provider unreachable: cannot reach Ollama at {self._base_url}") from e
+        except httpx.TimeoutException as e:
+            logger.error("Ollama request timed out at %s", self._base_url)
+            raise RuntimeError(f"Provider timeout: Ollama at {self._base_url}") from e
 
         data = response.json()
         return data["message"]["content"].strip()

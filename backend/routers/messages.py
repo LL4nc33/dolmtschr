@@ -84,6 +84,9 @@ async def get_message_audio(session_id: str, message_id: str) -> FileResponse:
             raise HTTPException(status_code=404, detail="No audio for this message")
 
         audio_file = Path(s.audio_storage_path) / msg.audio_path
+        # Path traversal guard
+        if not audio_file.resolve().is_relative_to(Path(s.audio_storage_path).resolve()):
+            raise HTTPException(status_code=400, detail="Invalid audio path")
         if not audio_file.exists():
             raise HTTPException(status_code=404, detail="Audio file not found")
 

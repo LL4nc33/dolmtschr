@@ -34,11 +34,21 @@ class ChatterboxRemoteProvider(TTSProvider):
             payload["temperature"] = temperature
         logger.info("Chatterbox synthesize voice=%s len=%d", voice_name, len(text))
 
-        resp = await self._client.post(
-            f"{self._base_url}/v1/audio/speech",
-            json=payload,
-        )
-        resp.raise_for_status()
+        try:
+            resp = await self._client.post(
+                f"{self._base_url}/v1/audio/speech",
+                json=payload,
+            )
+            resp.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            logger.error("Chatterbox returned %s: %s", e.response.status_code, e.response.text[:200])
+            raise RuntimeError(f"TTS failed: Chatterbox {e.response.status_code}") from e
+        except httpx.ConnectError as e:
+            logger.error("Cannot reach Chatterbox at %s", self._base_url)
+            raise RuntimeError(f"Provider unreachable: cannot reach Chatterbox at {self._base_url}") from e
+        except httpx.TimeoutException as e:
+            logger.error("Chatterbox request timed out at %s", self._base_url)
+            raise RuntimeError(f"Provider timeout: Chatterbox at {self._base_url}") from e
         return resp.content
 
     async def get_voices(self) -> list[dict[str, str | None]]:
