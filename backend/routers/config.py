@@ -29,6 +29,7 @@ from backend.models import (
     UsageResponse,
 )
 from backend.providers.tts.chatterbox_remote import ChatterboxRemoteProvider
+from backend.utils import validate_provider_url
 
 logger = logging.getLogger(__name__)
 
@@ -239,6 +240,8 @@ async def get_elevenlabs_voices(
 async def get_ollama_models(
     url: str | None = Query(None),
 ) -> ModelsResponse:
+    if url:
+        validate_provider_url(url)
     s = get_settings()
     ollama_url = (url or s.ollama_url).rstrip("/")
     try:
@@ -258,6 +261,7 @@ async def get_openai_models(
     url: str = Query(...),
     key: str = Query(""),
 ) -> ModelsResponse:
+    validate_provider_url(url)
     headers: dict[str, str] = {}
     if key:
         headers["Authorization"] = f"Bearer {key}"
@@ -280,6 +284,8 @@ async def warmup_gpu(
     ollama_url: str | None = Query(None),
     keep_alive: str | None = Query(None),
 ) -> dict:
+    if ollama_url:
+        validate_provider_url(ollama_url)
     s = get_settings()
     effective_url = (ollama_url or s.ollama_url).rstrip("/")
     model = s.ollama_model
@@ -317,6 +323,9 @@ async def get_gpu_status(
     ollama_url: str | None = Query(None),
     chatterbox_url: str | None = Query(None),
 ) -> GpuStatusResponse:
+    for url_param in (ollama_url, chatterbox_url):
+        if url_param:
+            validate_provider_url(url_param)
     s = get_settings()
     ollama_info: dict = {}
     chatterbox_info: dict = {}
@@ -362,6 +371,9 @@ async def get_provider_health(
     ollama_url: str | None = Query(None),
     chatterbox_url: str | None = Query(None),
 ) -> HealthResponse:
+    for url_param in (ollama_url, chatterbox_url):
+        if url_param:
+            validate_provider_url(url_param)
     s = get_settings()
     providers: dict[str, HealthProviderInfo] = {}
 

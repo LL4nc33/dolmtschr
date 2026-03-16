@@ -86,6 +86,19 @@ export interface SearchResponse {
   total: number
 }
 
+export interface LanguageCoverageEntry {
+  tts_provider: string | null
+  translate_provider: string | null
+  tts_badge: 'voice' | 'text-only'
+}
+
+export interface LanguageCoverage {
+  languages: Record<string, LanguageCoverageEntry>
+  tts_chain: string[]
+  translate_chain: string[]
+  totals: { voice: number; text_only: number }
+}
+
 interface ConfigResponse {
   stt_provider: string
   tts_provider: string
@@ -215,6 +228,14 @@ export async function pipeline(
 
 export async function getConfig(): Promise<ConfigResponse> {
   return request('/config')
+}
+
+export async function getLanguageCoverage(ttsChain?: string[], translateChain?: string[]): Promise<LanguageCoverage> {
+  const params = new URLSearchParams()
+  if (ttsChain?.length) params.set('tts_chain', ttsChain.join(','))
+  if (translateChain?.length) params.set('translate_chain', translateChain.join(','))
+  const qs = params.toString()
+  return request(`/languages${qs ? `?${qs}` : ''}`)
 }
 
 export async function getOllamaModels(url?: string): Promise<string[]> {

@@ -1,3 +1,4 @@
+import asyncio
 import io
 import logging
 import tempfile
@@ -57,7 +58,8 @@ class WhisperLocalProvider(STTProvider):
             tmp.flush()
 
             try:
-                segments, info = model.transcribe(
+                segments, info = await asyncio.to_thread(
+                    model.transcribe,
                     tmp.name,
                     language=language,
                     beam_size=5,

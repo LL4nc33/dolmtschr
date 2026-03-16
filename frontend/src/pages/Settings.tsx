@@ -39,7 +39,7 @@ export function Settings({ settings, update }: SettingsProps) {
   const health = useProviderHealth(settings.ollamaUrl || undefined, settings.chatterboxUrl || undefined)
 
   useEffect(() => {
-    getConfig().then(setConfig).catch(() => {})
+    getConfig().then(setConfig).catch((e) => console.warn('getConfig failed', e))
     health.refresh()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -5,8 +5,10 @@ const STACK = ['faster-whisper', 'piper tts', 'chatterbox', 'ollama', 'swagger u
 export function Footer() {
   const [index, setIndex] = useState(0)
   const [visible, setVisible] = useState(true)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   useEffect(() => {
+    if (prefersReducedMotion) return
     const interval = setInterval(() => {
       setVisible(false)
       setTimeout(() => {

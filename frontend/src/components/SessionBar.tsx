@@ -12,13 +12,19 @@ export function SessionBar({ sessionId, title, messageCount, onEnd }: SessionBar
 
   const label = title || 'session'
 
+  const handleEnd = () => {
+    if (window.confirm('Session beenden?')) {
+      onEnd()
+    }
+  }
+
   return (
     <div className="flex items-center justify-between font-mono text-xs" style={{ color: 'var(--text-secondary)' }}>
       <span>
         {label}
         {messageCount > 0 && ` (${messageCount})`}
       </span>
-      <Button variant="ghost" className="font-mono text-xs px-2 py-0" onClick={onEnd}>
+      <Button variant="ghost" className="font-mono text-xs px-2 py-0" onClick={handleEnd}>
         [ end ]
       </Button>
     </div>

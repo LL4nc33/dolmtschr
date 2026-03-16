@@ -13,10 +13,13 @@ from fastapi import APIRouter, File, HTTPException, Query, UploadFile
 from backend.dependencies import get_settings, get_stt
 from backend.models import PipelineResponse
 from backend.resolver import resolve_translate, resolve_tts
+from backend.utils import validate_provider_url
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api", tags=["pipeline"])
+
+_background_tasks: set[asyncio.Task[None]] = set()
 
 BENCHMARKS_DIR = Path(__file__).resolve().parent.parent.parent / "benchmarks"
 
@@ -102,7 +105,9 @@ async def _save_message(
             logger.debug("Message saved: %s in session %s", msg_id, session_id)
 
             # Generate embedding (non-blocking, fire-and-forget)
-            asyncio.create_task(_generate_embedding(str(msg_id), original_text, translated_text))
+            embed_task = asyncio.create_task(_generate_embedding(str(msg_id), original_text, translated_text))
+            _background_tasks.add(embed_task)
+            embed_task.add_done_callback(_background_tasks.discard)
     except Exception as exc:
         logger.warning("Failed to save message: %s", exc)
 
@@ -160,11 +165,26 @@ async def full_pipeline(
     session_id: str | None = Query(None),
     profile_id: str | None = Query(None),  # Industry Profile für System-Prompt-Injection
 ) -> PipelineResponse:
+    # Validate user-supplied URLs against SSRF
+    for url_param in (chatterbox_url, ollama_url, api_url):
+        if url_param:
+            try:
+                validate_provider_url(url_param)
+            except ValueError as e:
+                raise HTTPException(status_code=400, detail=str(e))
+
     total_start = time.perf_counter()
+
+    MAX_AUDIO_BYTES = 25 * 1024 * 1024  # 25 MB
 
     # 1. STT
     t0 = time.perf_counter()
     audio = await file.read()
+    if len(audio) > MAX_AUDIO_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Audio too large ({len(audio)} bytes, max {MAX_AUDIO_BYTES})",
+        )
     try:
         text, detected_lang = await get_stt().transcribe(audio, source_lang)
     except Exception as exc:
@@ -259,7 +279,7 @@ async def full_pipeline(
     # Save to chat history (non-blocking)
     if session_id and s.history_enabled:
         model_used = model or (s.ollama_model if (provider or s.translate_provider) == "local" else provider or s.translate_provider)
-        asyncio.create_task(_save_message(
+        task = asyncio.create_task(_save_message(
             session_id=session_id,
             direction="source",
             original_text=text,
@@ -273,6 +293,8 @@ async def full_pipeline(
             tts_ms=tts_ms,
             model_used=model_used,
         ))
+        _background_tasks.add(task)
+        task.add_done_callback(_background_tasks.discard)
 
     return PipelineResponse(
         original_text=text,

@@ -34,6 +34,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     logger.info("Providers ready (tts=%s)", "ok" if tts_provider else "disabled")
 
     # Initialize database if history is enabled
+    _cleanup_task: asyncio.Task[None] | None = None
     embedding_provider = None
     if settings.history_enabled:
         try:
@@ -49,7 +50,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             logger.info("Database initialized")
             # Start cleanup background task
             from backend.database.cleanup import cleanup_loop
-            asyncio.create_task(cleanup_loop())
+            _cleanup_task = asyncio.create_task(cleanup_loop())
             # Create embedding provider singleton
             from backend.providers.embedding.ollama_embed import OllamaEmbeddingProvider
             embedding_provider = OllamaEmbeddingProvider(
@@ -61,6 +62,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     init_providers(settings, stt_provider, tts_provider, translate_provider, embedding_provider)
 
     yield
+
+    # Cancel cleanup background task if it was started
+    if _cleanup_task is not None:
+        _cleanup_task.cancel()
 
     logger.info("Shutting down providers")
     await get_stt().cleanup()

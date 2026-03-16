@@ -53,7 +53,7 @@ export function App() {
   useEffect(() => {
     getLanguageCoverage(settings.ttsChain, settings.translateChain)
       .then(setCoverage)
-      .catch(() => {})
+      .catch((e) => console.warn('getLanguageCoverage failed', e))
   }, [settings.ttsChain, settings.translateChain])
 
   const handleNewSession = useCallback(async () => {

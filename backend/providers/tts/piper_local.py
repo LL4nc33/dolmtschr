@@ -1,3 +1,4 @@
+import asyncio
 import io
 import logging
 import wave
@@ -34,7 +35,9 @@ class PiperLocalProvider(TTSProvider):
     async def synthesize(self, text: str, lang: str, voice: str | None = None, **kwargs: object) -> bytes:
         voice_name = voice or self._voice_name
         piper_voice = self._load_voice(voice_name)
+        return await asyncio.to_thread(self._synthesize_sync, piper_voice, text)
 
+    def _synthesize_sync(self, piper_voice: PiperVoice, text: str) -> bytes:
         buf = io.BytesIO()
         with wave.open(buf, "wb") as wav:
             wav.setnchannels(1)
