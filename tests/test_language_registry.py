@@ -26,3 +26,10 @@ def test_get_all_language_codes():
 def test_no_duplicate_entries():
     codes = list(LANGUAGES.keys())
     assert len(codes) == len(set(codes))
+
+
+def test_quality_fields_valid():
+    for code, lang in LANGUAGES.items():
+        assert 0 <= lang.stt_quality <= 100, f"{code} stt_quality out of range: {lang.stt_quality}"
+        assert lang.translate_tier in ("excellent", "good", "fair", "poor", "experimental"), f"{code} invalid tier: {lang.translate_tier}"
+        assert lang.resource_level in ("high", "mid", "low", "very-low"), f"{code} invalid resource_level: {lang.resource_level}"

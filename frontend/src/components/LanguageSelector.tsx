@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Flag } from './Flag'
+import { LanguageQualityModal } from './LanguageQualityModal'
 import type { LanguageOption } from '../hooks/useLanguages'
 
 function GlobeIcon({ size = 20 }: { size?: number }) {
@@ -232,18 +233,37 @@ function DropdownItem({ lang, active, showContinent, onSelect }: {
   showContinent?: boolean
   onSelect: () => void
 }) {
+  const [showQuality, setShowQuality] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleMouseEnter = () => {
+    timerRef.current = setTimeout(() => setShowQuality(true), 400)
+  }
+  const handleMouseLeave = () => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    setShowQuality(false)
+  }
+
   return (
-    <button
-      className={`lang-dropdown-item ${active ? 'lang-dropdown-item--active' : ''}`}
-      onClick={onSelect}
+    <div className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <Flag countryCode={lang.countryCode} size={22} />
-      <span className="flex-1">{lang.nativeName}</span>
-      <span className="font-mono text-xs" style={{ opacity: 0.5 }}>{lang.code.toUpperCase()}</span>
-      {showContinent && (
-        <span className="font-mono text-xs" style={{ opacity: 0.4 }}>{lang.continent}</span>
+      <button
+        className={`lang-dropdown-item ${active ? 'lang-dropdown-item--active' : ''}`}
+        onClick={onSelect}
+      >
+        <Flag countryCode={lang.countryCode} size={22} />
+        <span className="flex-1">{lang.nativeName}</span>
+        <span className="font-mono text-xs" style={{ opacity: 0.5 }}>{lang.code.toUpperCase()}</span>
+        {showContinent && (
+          <span className="font-mono text-xs" style={{ opacity: 0.4 }}>{lang.continent}</span>
+        )}
+        <TtsBadge badge={lang.ttsBadge} />
+      </button>
+      {showQuality && (
+        <LanguageQualityModal lang={lang} style={{ left: '100%', top: 0 }} />
       )}
-      <TtsBadge badge={lang.ttsBadge} />
-    </button>
+    </div>
   )
 }

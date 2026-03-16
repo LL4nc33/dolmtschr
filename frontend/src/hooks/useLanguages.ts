@@ -9,6 +9,11 @@ export interface LanguageOption {
   continentLabel: string
   countryCode: string
   ttsBadge: 'voice' | 'text-only'
+  sttQuality: number
+  translateTier: 'excellent' | 'good' | 'fair' | 'poor' | 'experimental'
+  resourceLevel: 'high' | 'mid' | 'low' | 'very-low'
+  ttsProvider: string | null
+  translateProvider: string | null
 }
 
 export interface UseLanguagesReturn {
@@ -55,6 +60,11 @@ export function useLanguages(
       continentLabel: continents[entry.continent] || entry.continent,
       countryCode: entry.country_code,
       ttsBadge: entry.tts_badge,
+      sttQuality: entry.stt_quality,
+      translateTier: entry.translate_tier,
+      resourceLevel: entry.resource_level,
+      ttsProvider: entry.tts_provider,
+      translateProvider: entry.translate_provider,
     }))
     .sort((a, b) => a.nativeName.localeCompare(b.nativeName))
 

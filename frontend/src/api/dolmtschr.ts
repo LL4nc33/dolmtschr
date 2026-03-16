@@ -91,6 +91,9 @@ export interface LanguageCoverageEntry {
   native_name: string
   continent: string
   country_code: string
+  stt_quality: number
+  translate_tier: 'excellent' | 'good' | 'fair' | 'poor' | 'experimental'
+  resource_level: 'high' | 'mid' | 'low' | 'very-low'
   tts_provider: string | null
   translate_provider: string | null
   tts_badge: 'voice' | 'text-only'

@@ -33,6 +33,14 @@ def test_coverage_totals():
     assert totals["text_only"] > 0
 
 
+def test_coverage_includes_quality():
+    result = get_language_coverage(["piper"], ["ollama"])
+    de = result["languages"]["de"]
+    assert de["stt_quality"] == 94
+    assert de["translate_tier"] == "excellent"
+    assert de["resource_level"] == "high"
+
+
 def test_all_registry_languages_included():
     from backend.providers.language_registry import LANGUAGES
     result = get_language_coverage(["piper"], ["ollama"])
