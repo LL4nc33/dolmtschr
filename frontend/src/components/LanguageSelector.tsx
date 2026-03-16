@@ -108,6 +108,7 @@ interface LangChipProps {
 function LangChip({ value, onChange, languages, byContinent, continents, includeAuto }: LangChipProps) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
+  const [expandedCode, setExpandedCode] = useState<string | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
 
@@ -187,6 +188,8 @@ function LangChip({ value, onChange, languages, byContinent, continents, include
                 lang={l}
                 active={l.code === value}
                 showContinent
+                expanded={expandedCode === l.code}
+                onToggleQuality={() => setExpandedCode(expandedCode === l.code ? null : l.code)}
                 onSelect={() => { onChange(l.code); setOpen(false) }}
               />
             ))
@@ -208,6 +211,8 @@ function LangChip({ value, onChange, languages, byContinent, continents, include
                       key={l.code}
                       lang={l}
                       active={l.code === value}
+                      expanded={expandedCode === l.code}
+                      onToggleQuality={() => setExpandedCode(expandedCode === l.code ? null : l.code)}
                       onSelect={() => { onChange(l.code); setOpen(false) }}
                     />
                   ))}
@@ -227,14 +232,14 @@ function LangChip({ value, onChange, languages, byContinent, continents, include
   )
 }
 
-function DropdownItem({ lang, active, showContinent, onSelect }: {
+function DropdownItem({ lang, active, showContinent, expanded, onToggleQuality, onSelect }: {
   lang: LanguageOption
   active: boolean
   showContinent?: boolean
+  expanded?: boolean
+  onToggleQuality?: () => void
   onSelect: () => void
 }) {
-  const [showQuality, setShowQuality] = useState(false)
-
   return (
     <div>
       <div className="flex">
@@ -252,14 +257,14 @@ function DropdownItem({ lang, active, showContinent, onSelect }: {
         </button>
         <button
           className="font-mono text-xs px-2"
-          style={{ color: 'var(--text-secondary)', opacity: showQuality ? 1 : 0.4, background: 'none', border: 'none', cursor: 'pointer' }}
-          onClick={(e) => { e.stopPropagation(); setShowQuality(!showQuality) }}
+          style={{ color: 'var(--text-secondary)', opacity: expanded ? 1 : 0.4, background: 'none', border: 'none', cursor: 'pointer' }}
+          onClick={(e) => { e.stopPropagation(); onToggleQuality?.() }}
           aria-label="Show quality info"
         >
           i
         </button>
       </div>
-      {showQuality && (
+      {expanded && (
         <LanguageQualityModal lang={lang} />
       )}
     </div>
