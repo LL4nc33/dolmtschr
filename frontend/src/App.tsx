@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Layout, DarkModeToggle, InstallPrompt, Button } from '@oidanice/ink-ui'
+import { Layout, DarkModeToggle, InstallPrompt } from '@oidanice/ink-ui'
 import { useSettings } from './hooks/useSettings'
 import { useSession } from './hooks/useSession'
 import { useMessages } from './hooks/useMessages'
@@ -119,22 +119,22 @@ export function App() {
         title="dolmtschr"
         headerRight={
           <div className="flex items-center gap-1 md:gap-3">
-            <Button
-              variant={page === 'home' ? 'primary' : 'ghost'}
-              className="text-xs px-1 md:px-2"
+            <button
+              className="border-0 bg-transparent cursor-pointer font-mono text-xs p-1 md:p-2"
+              style={{ color: page === 'home' ? 'var(--primary, #3b82f6)' : 'var(--text)', opacity: page === 'home' ? 1 : 0.6 }}
               onClick={() => navigate('home')}
             >
               <span className="hidden md:inline">[ home ]</span>
-              <span className="md:hidden">home</span>
-            </Button>
-            <Button
-              variant={page === 'settings' ? 'primary' : 'ghost'}
-              className="text-xs px-1 md:px-2"
+              <span className="md:hidden">&#9679;</span>
+            </button>
+            <button
+              className="border-0 bg-transparent cursor-pointer font-mono text-xs p-1 md:p-2"
+              style={{ color: page === 'settings' ? 'var(--primary, #3b82f6)' : 'var(--text)', opacity: page === 'settings' ? 1 : 0.6 }}
               onClick={() => navigate('settings')}
             >
               <span className="hidden md:inline">[ settings ]</span>
-              <span className="md:hidden">set</span>
-            </Button>
+              <span className="md:hidden">&#9881;</span>
+            </button>
             <DarkModeToggle />
           </div>
         }
