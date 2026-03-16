@@ -167,7 +167,7 @@ export function Settings({ settings, update }: SettingsProps) {
         {/* Translate lokal: Ollama */}
         <Card>
           <h3 className="font-mono text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
-            <StatusDot status={health.providers?.ollama?.status} /> translate (lokal)
+            <StatusDot status={health.providers?.ollama?.status} /> local ai (translate)
           </h3>
           <OllamaConfig
             ollamaUrl={settings.ollamaUrl}

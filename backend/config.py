@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     chatterbox_url: str = "http://gpu00.node:4123"
     chatterbox_voice: str = "default"
 
-    # Translate
+    # Translate (ollama_* vars work with any OpenAI-compatible server: Ollama, llama.cpp, vLLM, etc.)
     translate_provider: str = "local"
     ollama_model: str = "gemma3:4b"
     ollama_url: str = "http://localhost:11434"

@@ -34,7 +34,7 @@ export function OllamaConfig({
   return (
     <>
       <Input
-        label="Ollama URL"
+        label="Local AI URL"
         placeholder="http://localhost:11434"
         value={ollamaUrl}
         onChange={(e) => onOllamaUrlChange(e.target.value)}
