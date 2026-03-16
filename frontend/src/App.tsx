@@ -37,6 +37,15 @@ export function App() {
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
+  useEffect(() => {
+    if (!sidebarOpen) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSidebarOpen(false)
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [sidebarOpen])
+
   const refreshSessions = useCallback(async () => {
     setSessionsLoading(true)
     try {
@@ -182,7 +191,11 @@ export function App() {
           />
           <div
             className="absolute inset-y-0 left-0 w-72 overflow-y-auto"
-            style={{ backgroundColor: 'var(--bg)', borderRight: '1px solid var(--border)' }}
+            style={{
+              backgroundColor: 'var(--bg)',
+              borderRight: '1px solid var(--border)',
+              animation: 'slideIn 0.2s ease-out',
+            }}
           >
             {sidebar}
           </div>

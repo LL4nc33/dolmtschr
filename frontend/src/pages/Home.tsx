@@ -80,7 +80,7 @@ export function Home({ settings, languages, byContinent, continents, onSourceCha
         <p className="text-center font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>{statusMessage}</p>
       )}
 
-      {phase === 'processing' && <Progress label="Processing..." />}
+      {phase === 'processing' && <Progress label="translating..." />}
 
       {phase === 'error' && error && <ErrorCard message={error} onRetry={handleRetry} />}
 

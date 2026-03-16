@@ -7,7 +7,7 @@ interface ErrorCardProps {
 
 export function ErrorCard({ message, onRetry }: ErrorCardProps) {
   return (
-    <Card className="space-y-3">
+    <Card className="space-y-3" style={{ borderLeft: '3px solid var(--error, #ef4444)' }}>
       <p className="font-mono text-sm">error: {message}</p>
       {onRetry && (
         <Button className="w-full" onClick={onRetry}>

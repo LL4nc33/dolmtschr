@@ -89,7 +89,7 @@ export function LanguageSelector({
       </div>
       {isTextOnly && (
         <span className="font-mono text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
-          kein TTS — nur Textausgabe
+          text-only (no TTS)
         </span>
       )}
     </div>
@@ -119,6 +119,15 @@ function LangChip({ value, onChange, languages, byContinent, continents, include
     }
     document.addEventListener('mousedown', close)
     return () => document.removeEventListener('mousedown', close)
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
   }, [open])
 
   useEffect(() => {
@@ -156,7 +165,7 @@ function LangChip({ value, onChange, languages, byContinent, continents, include
             <input
               ref={searchRef}
               type="text"
-              className="font-mono text-sm w-full"
+              className="lang-search-input font-mono text-sm w-full"
               placeholder="search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}

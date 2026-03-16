@@ -62,7 +62,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border: 2px solid var(--border);
   border-radius: 0;
   background: var(--bg);
@@ -78,8 +78,8 @@
   background: none;
   border: 2px solid var(--border);
   border-radius: 0;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   font-size: 18px;
   cursor: pointer;
   color: var(--text);
@@ -94,7 +94,7 @@
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
-  min-width: 180px;
+  min-width: 260px;
   max-height: 60vh;
   overflow-y: auto;
   background: var(--bg);
@@ -109,7 +109,7 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 6px 10px;
+  padding: 10px 12px;
   border: none;
   background: none;
   cursor: pointer;
@@ -120,6 +120,9 @@
   text-align: left;
 }
 .lang-dropdown-item:hover { background: var(--bg-secondary, rgba(0,0,0,0.05)); }
+.lang-search-input:focus {
+  border-color: var(--primary, #3b82f6);
+}
 .lang-dropdown-item--active { font-weight: 700; }
 
 /* ── Transcript Bubbles ────────────────────────── */
@@ -134,7 +137,7 @@
 }
 .bubble--translation {
   background: var(--primary, #3b82f6);
-  color: #fff;
+  color: var(--bg, #fff);
   border-color: var(--primary, #3b82f6);
   box-shadow: 4px 4px 0 color-mix(in srgb, var(--primary, #3b82f6) 70%, black);
 }
@@ -164,4 +167,10 @@
 .bubble-copy:hover, .bubble-play:hover { opacity: 1; }
 .bubble-play {
   font-size: 20px;
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
 }
