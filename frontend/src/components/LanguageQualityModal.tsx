@@ -69,8 +69,14 @@ export function LanguageQualityModal({ lang, style }: LanguageQualityModalProps)
   const tts = ttsScore(lang.ttsProvider, lang.ttsBadge)
   const stars = overallStars(lang.sttQuality, lang.translateTier, lang.ttsProvider, lang.ttsBadge)
 
+  const providerLabel = (p: string | null) => {
+    if (!p) return 'none'
+    if (p === 'ollama') return 'local ai'
+    return p
+  }
+
   const translateDetail = [
-    lang.translateProvider || 'none',
+    providerLabel(lang.translateProvider),
     lang.translateTier,
   ].join(' · ')
 
