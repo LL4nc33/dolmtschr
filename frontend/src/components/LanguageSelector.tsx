@@ -22,7 +22,7 @@ function TtsBadge({ badge }: { badge: 'voice' | 'text-only' }) {
         padding: '1px 3px',
         borderRadius: 2,
         backgroundColor: isVoice ? 'var(--accent, #6366f1)' : 'var(--bg-secondary, rgba(0,0,0,0.05))',
-        color: isVoice ? '#fff' : 'var(--text-secondary)',
+        color: isVoice ? 'var(--bg, #fff)' : 'var(--text-secondary)',
         opacity: isVoice ? 1 : 0.6,
         lineHeight: 1,
       }}
