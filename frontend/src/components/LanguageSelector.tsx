@@ -245,7 +245,7 @@ function DropdownItem({ lang, active, showContinent, onSelect }: {
   }
 
   return (
-    <div className="relative"
+    <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -262,7 +262,7 @@ function DropdownItem({ lang, active, showContinent, onSelect }: {
         <TtsBadge badge={lang.ttsBadge} />
       </button>
       {showQuality && (
-        <LanguageQualityModal lang={lang} style={{ left: '100%', top: 0 }} />
+        <LanguageQualityModal lang={lang} />
       )}
     </div>
   )

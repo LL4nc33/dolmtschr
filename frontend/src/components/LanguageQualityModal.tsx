@@ -82,15 +82,9 @@ export function LanguageQualityModal({ lang, style }: LanguageQualityModalProps)
     <div
       className="font-mono text-xs"
       style={{
-        position: 'absolute',
-        top: '100%',
-        left: 0,
-        zIndex: 60,
-        minWidth: 240,
-        padding: '12px',
-        background: 'var(--bg)',
-        border: '2px solid var(--border)',
-        boxShadow: '4px 4px 0 var(--border)',
+        padding: '8px 10px',
+        background: 'var(--bg-secondary, rgba(0,0,0,0.03))',
+        borderTop: '1px solid var(--border)',
         ...style,
       }}
     >
