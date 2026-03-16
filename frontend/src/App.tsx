@@ -118,20 +118,22 @@ export function App() {
         }
         title="dolmtschr"
         headerRight={
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center gap-1 md:gap-3">
             <Button
               variant={page === 'home' ? 'primary' : 'ghost'}
-              className="text-xs"
+              className="text-xs px-1 md:px-2"
               onClick={() => navigate('home')}
             >
-              [ home ]
+              <span className="hidden md:inline">[ home ]</span>
+              <span className="md:hidden">home</span>
             </Button>
             <Button
               variant={page === 'settings' ? 'primary' : 'ghost'}
-              className="text-xs"
+              className="text-xs px-1 md:px-2"
               onClick={() => navigate('settings')}
             >
-              [ settings ]
+              <span className="hidden md:inline">[ settings ]</span>
+              <span className="md:hidden">set</span>
             </Button>
             <DarkModeToggle />
           </div>
