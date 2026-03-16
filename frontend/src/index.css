@@ -87,7 +87,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease, border-color 0.15s;
-  box-shadow: 3px 3px 0 var(--border);
 }
 .lang-swap-btn:hover { border-color: var(--primary); }
 .lang-swap-btn:disabled { opacity: 0.3; cursor: not-allowed; }
