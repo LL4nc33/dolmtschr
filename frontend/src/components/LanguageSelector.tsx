@@ -234,33 +234,31 @@ function DropdownItem({ lang, active, showContinent, onSelect }: {
   onSelect: () => void
 }) {
   const [showQuality, setShowQuality] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const handleMouseEnter = () => {
-    timerRef.current = setTimeout(() => setShowQuality(true), 400)
-  }
-  const handleMouseLeave = () => {
-    if (timerRef.current) clearTimeout(timerRef.current)
-    setShowQuality(false)
-  }
 
   return (
-    <div
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <button
-        className={`lang-dropdown-item ${active ? 'lang-dropdown-item--active' : ''}`}
-        onClick={onSelect}
-      >
-        <Flag countryCode={lang.countryCode} size={22} />
-        <span className="flex-1">{lang.nativeName}</span>
-        <span className="font-mono text-xs" style={{ opacity: 0.5 }}>{lang.code.toUpperCase()}</span>
-        {showContinent && (
-          <span className="font-mono text-xs" style={{ opacity: 0.4 }}>{lang.continent}</span>
-        )}
-        <TtsBadge badge={lang.ttsBadge} />
-      </button>
+    <div>
+      <div className="flex">
+        <button
+          className={`lang-dropdown-item flex-1 ${active ? 'lang-dropdown-item--active' : ''}`}
+          onClick={onSelect}
+        >
+          <Flag countryCode={lang.countryCode} size={22} />
+          <span className="flex-1">{lang.nativeName}</span>
+          <span className="font-mono text-xs" style={{ opacity: 0.5 }}>{lang.code.toUpperCase()}</span>
+          {showContinent && (
+            <span className="font-mono text-xs" style={{ opacity: 0.4 }}>{lang.continent}</span>
+          )}
+          <TtsBadge badge={lang.ttsBadge} />
+        </button>
+        <button
+          className="font-mono text-xs px-2"
+          style={{ color: 'var(--text-secondary)', opacity: showQuality ? 1 : 0.4, background: 'none', border: 'none', cursor: 'pointer' }}
+          onClick={(e) => { e.stopPropagation(); setShowQuality(!showQuality) }}
+          aria-label="Show quality info"
+        >
+          i
+        </button>
+      </div>
       {showQuality && (
         <LanguageQualityModal lang={lang} />
       )}
