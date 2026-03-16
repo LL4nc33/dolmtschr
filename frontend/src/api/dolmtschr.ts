@@ -87,6 +87,10 @@ export interface SearchResponse {
 }
 
 export interface LanguageCoverageEntry {
+  name: string
+  native_name: string
+  continent: string
+  country_code: string
   tts_provider: string | null
   translate_provider: string | null
   tts_badge: 'voice' | 'text-only'
@@ -94,6 +98,7 @@ export interface LanguageCoverageEntry {
 
 export interface LanguageCoverage {
   languages: Record<string, LanguageCoverageEntry>
+  continents: Record<string, string>
   tts_chain: string[]
   translate_chain: string[]
   totals: { voice: number; text_only: number }

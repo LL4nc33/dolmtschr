@@ -89,49 +89,40 @@ def get_language_coverage(
     tts_chain: list[str],
     translate_chain: list[str],
 ) -> dict:
-    """Compute per-language coverage dict based on active chains.
+    """Compute per-language coverage dict based on the language registry.
+
+    Iterates over ALL languages in the registry and resolves TTS/Translate
+    providers via the active chains. Each entry includes metadata from the
+    registry (name, native_name, continent, country_code).
 
     Returns::
 
         {
             "languages": {
-                "de": {"tts_provider": "chatterbox", "translate_provider": "ollama", "tts_badge": "voice"},
-                "so": {"tts_provider": null, "translate_provider": "ollama", "tts_badge": "text-only"},
+                "de": {
+                    "name": "German", "native_name": "Deutsch",
+                    "continent": "EU", "country_code": "at",
+                    "tts_provider": "chatterbox", "translate_provider": "ollama",
+                    "tts_badge": "voice",
+                },
                 ...
             },
+            "continents": {"EU": "Europa", ...},
             "tts_chain": ["chatterbox", "piper", "elevenlabs"],
             "translate_chain": ["ollama", "deepl"],
             "totals": {"voice": 41, "text_only": 58}
         }
     """
-    # Collect all languages from TTS + Translate providers in the chains
-    all_langs: set[str] = set()
-
-    for provider in tts_chain:
-        langs = _TTS_PROVIDERS.get(provider)
-        if langs:
-            all_langs |= langs
-
-    has_universal_translate = False
-    for provider in translate_chain:
-        langs = _TRANSLATE_PROVIDERS.get(provider)
-        if langs is None:
-            has_universal_translate = True
-        elif langs:
-            all_langs |= langs
-
-    # If a universal translate provider is in the chain, also include
-    # all TTS languages (they're already in) — but the set of displayable
-    # languages is the union of all provider language sets.
-    # If universal translate, all TTS languages are valid targets.
+    from backend.providers.language_registry import CONTINENTS
+    from backend.providers.language_registry import LANGUAGES as REGISTRY
 
     languages: dict[str, dict] = {}
     voice_count = 0
     text_only_count = 0
 
-    for lang in sorted(all_langs):
-        tts_prov = resolve_tts_provider(lang, tts_chain)
-        trans_prov = resolve_translate_provider(lang, translate_chain)
+    for code, meta in sorted(REGISTRY.items()):
+        tts_prov = resolve_tts_provider(code, tts_chain)
+        trans_prov = resolve_translate_provider(code, translate_chain)
         badge = "voice" if tts_prov else "text-only"
 
         if badge == "voice":
@@ -139,7 +130,11 @@ def get_language_coverage(
         else:
             text_only_count += 1
 
-        languages[lang] = {
+        languages[code] = {
+            "name": meta.name,
+            "native_name": meta.native_name,
+            "continent": meta.continent,
+            "country_code": meta.country_code,
             "tts_provider": tts_prov,
             "translate_provider": trans_prov,
             "tts_badge": badge,
@@ -147,6 +142,7 @@ def get_language_coverage(
 
     return {
         "languages": languages,
+        "continents": CONTINENTS,
         "tts_chain": tts_chain,
         "translate_chain": translate_chain,
         "totals": {"voice": voice_count, "text_only": text_only_count},

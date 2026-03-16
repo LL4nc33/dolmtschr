@@ -1,6 +1,7 @@
 import { Progress } from '@oidanice/ink-ui'
 import type { AppSettings } from '../hooks/useSettings'
-import type { MessageResponse, LanguageCoverage } from '../api/dolmtschr'
+import type { MessageResponse } from '../api/dolmtschr'
+import type { LanguageOption } from '../hooks/useLanguages'
 import { usePipeline } from '../hooks/usePipeline'
 import { useKeyboardShortcut } from '../hooks/useKeyboardShortcut'
 import { PipelineRecorder } from '../components/PipelineRecorder'
@@ -13,7 +14,9 @@ import { MessageFeed } from '../components/MessageFeed'
 
 interface HomeProps {
   settings: AppSettings
-  coverage?: LanguageCoverage
+  languages: LanguageOption[]
+  byContinent: Record<string, LanguageOption[]>
+  continents: Record<string, string>
   onSourceChange: (lang: string) => void
   onTargetChange: (lang: string) => void
   sessionId: string | null
@@ -24,7 +27,7 @@ interface HomeProps {
   onAutoSession: (id: string) => void
 }
 
-export function Home({ settings, coverage, onSourceChange, onTargetChange, sessionId, sessionTitle, messages, onEndSession, onMessageAppend, onAutoSession }: HomeProps) {
+export function Home({ settings, languages, byContinent, continents, onSourceChange, onTargetChange, sessionId, sessionTitle, messages, onEndSession, onMessageAppend, onAutoSession }: HomeProps) {
   const {
     phase, result, error, statusMessage, autoStart, spaceToggle,
     handleProcess, handleRetry, handleReset, handleRecordingStart,
@@ -53,7 +56,9 @@ export function Home({ settings, coverage, onSourceChange, onTargetChange, sessi
         targetLang={settings.targetLang}
         onSourceChange={onSourceChange}
         onTargetChange={onTargetChange}
-        coverage={coverage}
+        languages={languages}
+        byContinent={byContinent}
+        continents={continents}
       />
 
       {inSession && messages.length > 0 && (

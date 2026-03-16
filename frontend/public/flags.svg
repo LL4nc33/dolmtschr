@@ -1,0 +1,668 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- ===== EXISTING FLAGS (migrated from FlagSvg.tsx) ===== -->
+
+  <!-- Austria: rot-weiss-rot horizontal -->
+  <symbol id="flag-at" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#ed2939"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#ed2939"/>
+  </symbol>
+
+  <!-- United Kingdom: Union Jack -->
+  <symbol id="flag-gb" viewBox="0 0 60 30">
+    <rect width="60" height="30" fill="#012169"/>
+    <path d="M0 0L60 30M60 0L0 30" stroke="#fff" stroke-width="6"/>
+    <path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" stroke-width="4"/>
+    <path d="M30 0V30M0 15H60" stroke="#fff" stroke-width="10"/>
+    <path d="M30 0V30M0 15H60" stroke="#C8102E" stroke-width="6"/>
+  </symbol>
+
+  <!-- Saudi Arabia: gruen mit weissem Text -->
+  <symbol id="flag-sa" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#006C35"/>
+    <text x="15" y="12" text-anchor="middle" fill="#fff" font-size="6" font-family="serif">&#1604;&#1575;</text>
+  </symbol>
+
+  <!-- Turkey: rot mit Halbmond und Stern -->
+  <symbol id="flag-tr" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#E30A17"/>
+    <circle cx="11" cy="10" r="6" fill="#fff"/>
+    <circle cx="13" cy="10" r="5" fill="#E30A17"/>
+    <polygon points="17,10 14.5,8.5 14.5,11.5 17,10 14,7.5 14,12.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Russia: weiss-blau-rot horizontal -->
+  <symbol id="flag-ru" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#0039A6"/>
+    <rect y="13" width="30" height="7" fill="#D52B1E"/>
+  </symbol>
+
+  <!-- Japan: weiss mit rotem Kreis -->
+  <symbol id="flag-jp" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <circle cx="15" cy="10" r="6" fill="#BC002D"/>
+  </symbol>
+
+  <!-- China: rot mit gelbem Stern -->
+  <symbol id="flag-cn" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#DE2910"/>
+    <polygon points="5,3 6.2,6.7 3,5 7,5 3.8,6.7" fill="#FFDE00"/>
+  </symbol>
+
+  <!-- France: blau-weiss-rot vertikal -->
+  <symbol id="flag-fr" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#002395"/>
+    <rect x="10" width="10" height="20" fill="#fff"/>
+    <rect x="20" width="10" height="20" fill="#ED2939"/>
+  </symbol>
+
+  <!-- Spain: rot-gelb-rot horizontal -->
+  <symbol id="flag-es" viewBox="0 0 30 20">
+    <rect width="30" height="5" fill="#AA151B"/>
+    <rect y="5" width="30" height="10" fill="#F1BF00"/>
+    <rect y="15" width="30" height="5" fill="#AA151B"/>
+  </symbol>
+
+  <!-- Italy: gruen-weiss-rot vertikal -->
+  <symbol id="flag-it" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#009246"/>
+    <rect x="10" width="10" height="20" fill="#fff"/>
+    <rect x="20" width="10" height="20" fill="#CE2B37"/>
+  </symbol>
+
+  <!-- Portugal: gruen-rot mit gelbem Kreis -->
+  <symbol id="flag-pt" viewBox="0 0 30 20">
+    <rect width="12" height="20" fill="#006600"/>
+    <rect x="12" width="18" height="20" fill="#FF0000"/>
+    <circle cx="12" cy="10" r="4" fill="#FFCC00" stroke="#006600" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- Netherlands: rot-weiss-blau horizontal -->
+  <symbol id="flag-nl" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#AE1C28"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#21468B"/>
+  </symbol>
+
+  <!-- Poland: weiss-rot horizontal -->
+  <symbol id="flag-pl" viewBox="0 0 30 20">
+    <rect width="30" height="10" fill="#fff"/>
+    <rect y="10" width="30" height="10" fill="#DC143C"/>
+  </symbol>
+
+  <!-- Ukraine: blau-gelb horizontal -->
+  <symbol id="flag-ua" viewBox="0 0 30 20">
+    <rect width="30" height="10" fill="#005BBB"/>
+    <rect y="10" width="30" height="10" fill="#FFD500"/>
+  </symbol>
+
+  <!-- Iran: gruen-weiss-rot horizontal -->
+  <symbol id="flag-ir" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#239F40"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#DA0000"/>
+  </symbol>
+
+  <!-- South Korea: weiss mit Yin-Yang -->
+  <symbol id="flag-kr" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <circle cx="15" cy="10" r="5" fill="#C60C30"/>
+    <path d="M15 5 Q20 10 15 15 Q10 10 15 5" fill="#003478"/>
+  </symbol>
+
+  <!-- Romania: blau-gelb-rot vertikal -->
+  <symbol id="flag-ro" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#002B7F"/>
+    <rect x="10" width="10" height="20" fill="#FCD116"/>
+    <rect x="20" width="10" height="20" fill="#CE1126"/>
+  </symbol>
+
+  <!-- Hungary: rot-weiss-gruen horizontal -->
+  <symbol id="flag-hu" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#CE2939"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#477050"/>
+  </symbol>
+
+  <!-- Serbia: rot-blau-weiss horizontal -->
+  <symbol id="flag-rs" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#C6363C"/>
+    <rect y="7" width="30" height="6" fill="#0C4076"/>
+    <rect y="13" width="30" height="7" fill="#fff"/>
+  </symbol>
+
+  <!-- Bosnia: blau mit gelbem Dreieck und Sternen -->
+  <symbol id="flag-ba" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#002395"/>
+    <polygon points="8,0 22,20 8,20" fill="#FECB00"/>
+    <circle cx="9" cy="2" r="1.2" fill="#fff"/><circle cx="11" cy="5" r="1.2" fill="#fff"/>
+    <circle cx="13" cy="8" r="1.2" fill="#fff"/><circle cx="15" cy="11" r="1.2" fill="#fff"/>
+    <circle cx="17" cy="14" r="1.2" fill="#fff"/><circle cx="19" cy="17" r="1.2" fill="#fff"/>
+  </symbol>
+
+  <!-- Croatia: rot-weiss-blau horizontal mit Wappen -->
+  <symbol id="flag-hr" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#FF0000"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#171796"/>
+    <rect x="11" y="4" width="8" height="8" fill="#FF0000" stroke="#fff" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- ===== NEW FLAGS ===== -->
+
+  <!-- Greece: blau-weiss Streifen mit Kreuz -->
+  <symbol id="flag-gr" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#0D5EAF"/>
+    <rect y="2.2" width="30" height="2.2" fill="#fff"/>
+    <rect y="6.6" width="30" height="2.2" fill="#fff"/>
+    <rect y="11" width="30" height="2.2" fill="#fff"/>
+    <rect y="15.4" width="30" height="2.2" fill="#fff"/>
+    <rect width="12" height="11" fill="#0D5EAF"/>
+    <rect x="5" width="2" height="11" fill="#fff"/>
+    <rect y="4.5" width="12" height="2" fill="#fff"/>
+  </symbol>
+
+  <!-- Denmark: rot mit weissem Kreuz -->
+  <symbol id="flag-dk" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#C60C30"/>
+    <rect x="8" width="4" height="20" fill="#fff"/>
+    <rect y="8" width="30" height="4" fill="#fff"/>
+  </symbol>
+
+  <!-- Sweden: blau mit gelbem Kreuz -->
+  <symbol id="flag-se" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#006AA7"/>
+    <rect x="8" width="4" height="20" fill="#FECC00"/>
+    <rect y="8" width="30" height="4" fill="#FECC00"/>
+  </symbol>
+
+  <!-- Norway: rot mit blauem Kreuz -->
+  <symbol id="flag-no" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#EF2B2D"/>
+    <rect x="7" width="6" height="20" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect x="8" width="4" height="20" fill="#002868"/>
+    <rect y="8" width="30" height="4" fill="#002868"/>
+  </symbol>
+
+  <!-- Finland: weiss mit blauem Kreuz -->
+  <symbol id="flag-fi" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <rect x="8" width="4" height="20" fill="#003580"/>
+    <rect y="8" width="30" height="4" fill="#003580"/>
+  </symbol>
+
+  <!-- Czech Republic: weiss-rot mit blauem Keil -->
+  <symbol id="flag-cz" viewBox="0 0 30 20">
+    <rect width="30" height="10" fill="#fff"/>
+    <rect y="10" width="30" height="10" fill="#D7141A"/>
+    <polygon points="0,0 15,10 0,20" fill="#11457E"/>
+  </symbol>
+
+  <!-- Slovakia: weiss-blau-rot horizontal mit Wappen -->
+  <symbol id="flag-sk" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#0B4EA2"/>
+    <rect y="13" width="30" height="7" fill="#EE1C25"/>
+    <rect x="3" y="5" width="8" height="10" rx="1" fill="#fff" stroke="#EE1C25" stroke-width="0.5"/>
+    <polygon points="7,7 5,10 9,10" fill="#0B4EA2"/>
+  </symbol>
+
+  <!-- Bulgaria: weiss-gruen-rot horizontal -->
+  <symbol id="flag-bg" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#00966E"/>
+    <rect y="13" width="30" height="7" fill="#D62612"/>
+  </symbol>
+
+  <!-- Estonia: blau-schwarz-weiss horizontal -->
+  <symbol id="flag-ee" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#0072CE"/>
+    <rect y="7" width="30" height="6" fill="#000"/>
+    <rect y="13" width="30" height="7" fill="#fff"/>
+  </symbol>
+
+  <!-- Latvia: dunkelrot-weiss-dunkelrot horizontal -->
+  <symbol id="flag-lv" viewBox="0 0 30 20">
+    <rect width="30" height="8" fill="#9E3039"/>
+    <rect y="8" width="30" height="4" fill="#fff"/>
+    <rect y="12" width="30" height="8" fill="#9E3039"/>
+  </symbol>
+
+  <!-- Lithuania: gelb-gruen-rot horizontal -->
+  <symbol id="flag-lt" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#FDB913"/>
+    <rect y="7" width="30" height="6" fill="#006A44"/>
+    <rect y="13" width="30" height="7" fill="#C1272D"/>
+  </symbol>
+
+  <!-- Slovenia: weiss-blau-rot horizontal -->
+  <symbol id="flag-si" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#003DA5"/>
+    <rect y="13" width="30" height="7" fill="#ED1C24"/>
+    <polygon points="3,1 7,5 3,5" fill="#003DA5" stroke="#fff" stroke-width="0.3"/>
+  </symbol>
+
+  <!-- North Macedonia: rot mit gelber Sonne -->
+  <symbol id="flag-mk" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#D20000"/>
+    <circle cx="15" cy="10" r="4" fill="#FFE600"/>
+    <line x1="0" y1="0" x2="15" y2="10" stroke="#FFE600" stroke-width="2"/>
+    <line x1="30" y1="0" x2="15" y2="10" stroke="#FFE600" stroke-width="2"/>
+    <line x1="0" y1="20" x2="15" y2="10" stroke="#FFE600" stroke-width="2"/>
+    <line x1="30" y1="20" x2="15" y2="10" stroke="#FFE600" stroke-width="2"/>
+    <line x1="15" y1="0" x2="15" y2="20" stroke="#FFE600" stroke-width="2"/>
+    <line x1="0" y1="10" x2="30" y2="10" stroke="#FFE600" stroke-width="2"/>
+    <circle cx="15" cy="10" r="3" fill="#D20000"/>
+    <circle cx="15" cy="10" r="2.5" fill="#FFE600" stroke="#D20000" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- Albania: rot mit schwarzem Doppeladler (vereinfacht) -->
+  <symbol id="flag-al" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#E41E20"/>
+    <polygon points="15,4 12,8 9,6 11,10 8,12 12,11 15,16 18,11 22,12 19,10 21,6 18,8" fill="#000"/>
+  </symbol>
+
+  <!-- Iceland: blau mit rotem Kreuz auf weiss -->
+  <symbol id="flag-is" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#003897"/>
+    <rect x="7" width="6" height="20" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect x="8" width="4" height="20" fill="#D72828"/>
+    <rect y="8" width="30" height="4" fill="#D72828"/>
+  </symbol>
+
+  <!-- Ireland: gruen-weiss-orange vertikal -->
+  <symbol id="flag-ie" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#169B62"/>
+    <rect x="10" width="10" height="20" fill="#fff"/>
+    <rect x="20" width="10" height="20" fill="#FF883E"/>
+  </symbol>
+
+  <!-- Luxembourg: rot-weiss-blau horizontal -->
+  <symbol id="flag-lu" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#EF3340"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#00A3E0"/>
+  </symbol>
+
+  <!-- Malta: weiss-rot vertikal mit Kreuz -->
+  <symbol id="flag-mt" viewBox="0 0 30 20">
+    <rect width="15" height="20" fill="#fff"/>
+    <rect x="15" width="15" height="20" fill="#CF142B"/>
+    <rect x="2" y="1" width="4" height="4" fill="none" stroke="#8B8B8B" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- Georgia: weiss mit rotem Kreuz -->
+  <symbol id="flag-ge" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <rect x="13" width="4" height="20" fill="#FF0000"/>
+    <rect y="8" width="30" height="4" fill="#FF0000"/>
+    <rect x="4" y="3" width="2" height="2" fill="#FF0000"/>
+    <rect x="24" y="3" width="2" height="2" fill="#FF0000"/>
+    <rect x="4" y="15" width="2" height="2" fill="#FF0000"/>
+    <rect x="24" y="15" width="2" height="2" fill="#FF0000"/>
+  </symbol>
+
+  <!-- Belarus: rot-gruen horizontal -->
+  <symbol id="flag-by" viewBox="0 0 30 20">
+    <rect width="30" height="12" fill="#CF101A"/>
+    <rect y="12" width="30" height="8" fill="#007C30"/>
+    <rect width="4" height="20" fill="#fff"/>
+    <line x1="1" y1="0" x2="3" y2="4" stroke="#CF101A" stroke-width="0.5"/>
+    <line x1="3" y1="0" x2="1" y2="4" stroke="#CF101A" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- Armenia: rot-blau-orange horizontal -->
+  <symbol id="flag-am" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#D90012"/>
+    <rect y="7" width="30" height="6" fill="#0033A0"/>
+    <rect y="13" width="30" height="7" fill="#F2A800"/>
+  </symbol>
+
+  <!-- Faroe Islands: weiss mit rot-blauem Kreuz -->
+  <symbol id="flag-fo" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <rect x="7" width="6" height="20" fill="#005EB8"/>
+    <rect y="7" width="30" height="6" fill="#005EB8"/>
+    <rect x="8" width="4" height="20" fill="#EF3340"/>
+    <rect y="8" width="30" height="4" fill="#EF3340"/>
+  </symbol>
+
+  <!-- India: orange-weiss-gruen mit blauem Chakra -->
+  <symbol id="flag-in" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#FF9933"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="7" fill="#138808"/>
+    <circle cx="15" cy="10" r="2" fill="none" stroke="#000080" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- Bangladesh: gruen mit rotem Kreis -->
+  <symbol id="flag-bd" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#006a4e"/>
+    <circle cx="13" cy="10" r="5" fill="#f42a41"/>
+  </symbol>
+
+  <!-- Thailand: rot-weiss-blau-weiss-rot horizontal -->
+  <symbol id="flag-th" viewBox="0 0 30 20">
+    <rect width="30" height="4" fill="#A51931"/>
+    <rect y="4" width="30" height="3" fill="#fff"/>
+    <rect y="7" width="30" height="6" fill="#2D2A4A"/>
+    <rect y="13" width="30" height="3" fill="#fff"/>
+    <rect y="16" width="30" height="4" fill="#A51931"/>
+  </symbol>
+
+  <!-- Vietnam: rot mit gelbem Stern -->
+  <symbol id="flag-vn" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#DA251D"/>
+    <polygon points="15,4 16.8,9.5 22.5,9.5 17.8,12.8 19.5,18 15,15 10.5,18 12.2,12.8 7.5,9.5 13.2,9.5" fill="#FFFF00"/>
+  </symbol>
+
+  <!-- Indonesia: rot-weiss horizontal -->
+  <symbol id="flag-id" viewBox="0 0 30 20">
+    <rect width="30" height="10" fill="#FF0000"/>
+    <rect y="10" width="30" height="10" fill="#fff"/>
+  </symbol>
+
+  <!-- Malaysia: rot-weiss Streifen mit blauem Kanton -->
+  <symbol id="flag-my" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <rect width="30" height="2.86" fill="#CC0001"/>
+    <rect y="5.72" width="30" height="2.86" fill="#CC0001"/>
+    <rect y="11.44" width="30" height="2.86" fill="#CC0001"/>
+    <rect y="17.14" width="30" height="2.86" fill="#CC0001"/>
+    <rect width="15" height="11.44" fill="#010066"/>
+    <circle cx="7" cy="5.7" r="3" fill="#FC0"/>
+    <circle cx="8" cy="5.7" r="2.5" fill="#010066"/>
+  </symbol>
+
+  <!-- Philippines: blau-rot mit weissem Dreieck -->
+  <symbol id="flag-ph" viewBox="0 0 30 20">
+    <rect width="30" height="10" fill="#0038A8"/>
+    <rect y="10" width="30" height="10" fill="#CE1126"/>
+    <polygon points="0,0 14,10 0,20" fill="#fff"/>
+    <circle cx="4" cy="10" r="1.5" fill="#FCD116"/>
+  </symbol>
+
+  <!-- Nepal: vereinfachtes Doppel-Dreieck (einzigartig!) -->
+  <symbol id="flag-np" viewBox="0 0 20 20">
+    <rect width="20" height="20" fill="#fff"/>
+    <polygon points="2,18 2,2 16,11" fill="#DC143C" stroke="#003893" stroke-width="1"/>
+    <polygon points="2,18 2,9 13,18" fill="#DC143C" stroke="#003893" stroke-width="1"/>
+    <circle cx="6" cy="7" r="1.5" fill="#fff"/>
+    <polygon points="6,13 5,15 7,15" fill="#fff"/>
+  </symbol>
+
+  <!-- Sri Lanka: vereinfacht gelb-rot -->
+  <symbol id="flag-lk" viewBox="0 0 30 20">
+    <rect width="5" height="20" fill="#005641"/>
+    <rect x="5" width="5" height="20" fill="#FF7722"/>
+    <rect x="10" width="20" height="20" fill="#8B0000"/>
+    <rect x="12" y="2" width="16" height="16" rx="1" fill="#8B0000" stroke="#FFBE29" stroke-width="1"/>
+  </symbol>
+
+  <!-- Cambodia: blau-rot-blau horizontal -->
+  <symbol id="flag-kh" viewBox="0 0 30 20">
+    <rect width="30" height="5" fill="#032EA1"/>
+    <rect y="5" width="30" height="10" fill="#E00025"/>
+    <rect y="15" width="30" height="5" fill="#032EA1"/>
+    <rect x="11" y="7" width="8" height="5" fill="#fff"/>
+  </symbol>
+
+  <!-- Laos: blau-rot horizontal mit weissem Kreis -->
+  <symbol id="flag-la" viewBox="0 0 30 20">
+    <rect width="30" height="5" fill="#CE1126"/>
+    <rect y="5" width="30" height="10" fill="#002868"/>
+    <rect y="15" width="30" height="5" fill="#CE1126"/>
+    <circle cx="15" cy="10" r="3.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Myanmar: gelb-gruen-rot horizontal mit Stern -->
+  <symbol id="flag-mm" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#FECB00"/>
+    <rect y="7" width="30" height="6" fill="#34B233"/>
+    <rect y="13" width="30" height="7" fill="#EA2839"/>
+    <polygon points="15,4 16.2,8 20.5,8 17,10.5 18.2,14.5 15,12 11.8,14.5 13,10.5 9.5,8 13.8,8" fill="#fff"/>
+  </symbol>
+
+  <!-- Mongolia: rot-blau-rot vertikal -->
+  <symbol id="flag-mn" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#C4272F"/>
+    <rect x="10" width="10" height="20" fill="#015197"/>
+    <rect x="20" width="10" height="20" fill="#C4272F"/>
+    <circle cx="5" cy="8" r="1.5" fill="#F9CF02"/>
+    <rect x="4" y="10" width="2" height="4" fill="#F9CF02"/>
+  </symbol>
+
+  <!-- Kazakhstan: blau mit gelber Sonne -->
+  <symbol id="flag-kz" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#00AFCA"/>
+    <circle cx="15" cy="10" r="4" fill="#FFD700"/>
+    <circle cx="15" cy="10" r="3" fill="#00AFCA"/>
+    <line x1="2" y1="3" x2="28" y2="3" stroke="#FFD700" stroke-width="1"/>
+    <line x1="2" y1="17" x2="28" y2="17" stroke="#FFD700" stroke-width="1"/>
+  </symbol>
+
+  <!-- Kyrgyzstan: rot mit gelber Sonne -->
+  <symbol id="flag-kg" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#E8112D"/>
+    <circle cx="15" cy="10" r="5" fill="#FFC72C"/>
+    <circle cx="15" cy="10" r="3" fill="#E8112D"/>
+  </symbol>
+
+  <!-- Uzbekistan: blau-weiss-gruen horizontal -->
+  <symbol id="flag-uz" viewBox="0 0 30 20">
+    <rect width="30" height="6" fill="#1EB53A"/>
+    <rect y="6" width="30" height="1" fill="#CE1126"/>
+    <rect y="7" width="30" height="6" fill="#fff"/>
+    <rect y="13" width="30" height="1" fill="#CE1126"/>
+    <rect y="14" width="30" height="6" fill="#0099B5"/>
+    <circle cx="6" cy="3" r="1.5" fill="#fff"/>
+    <circle cx="7" cy="3" r="1.5" fill="#0099B5"/>
+  </symbol>
+
+  <!-- Tajikistan: rot-weiss-gruen horizontal -->
+  <symbol id="flag-tj" viewBox="0 0 30 20">
+    <rect width="30" height="6" fill="#CC0000"/>
+    <rect y="6" width="30" height="8" fill="#fff"/>
+    <rect y="14" width="30" height="6" fill="#006600"/>
+    <circle cx="15" cy="10" r="1.5" fill="#CC0000"/>
+  </symbol>
+
+  <!-- Turkmenistan: gruen mit Teppichstreifen -->
+  <symbol id="flag-tm" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#00843D"/>
+    <rect x="4" width="5" height="20" fill="#AC1F3A"/>
+    <circle cx="17" cy="6" r="2.5" fill="#fff"/>
+    <circle cx="18.5" cy="6" r="2" fill="#00843D"/>
+    <polygon points="22,4 22.5,5.5 24,5.5 22.8,6.5 23.2,8 22,7 20.8,8 21.2,6.5 20,5.5 21.5,5.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Azerbaijan: blau-rot-gruen horizontal mit Halbmond -->
+  <symbol id="flag-az" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#0092BC"/>
+    <rect y="7" width="30" height="6" fill="#E4002B"/>
+    <rect y="13" width="30" height="7" fill="#00B140"/>
+    <circle cx="14" cy="10" r="2.5" fill="#fff"/>
+    <circle cx="15" cy="10" r="2" fill="#E4002B"/>
+    <polygon points="18,9 17.5,10 18,11 17,10.5 17,9.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Israel: weiss mit blauem Davidstern -->
+  <symbol id="flag-il" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <rect y="2" width="30" height="3" fill="#0038B8"/>
+    <rect y="15" width="30" height="3" fill="#0038B8"/>
+    <polygon points="15,5 18.5,12 11.5,12" fill="none" stroke="#0038B8" stroke-width="1"/>
+    <polygon points="15,13 11.5,6 18.5,6" fill="none" stroke="#0038B8" stroke-width="1"/>
+  </symbol>
+
+  <!-- Pakistan: gruen mit weissem Halbmond und Stern -->
+  <symbol id="flag-pk" viewBox="0 0 30 20">
+    <rect width="6" height="20" fill="#fff"/>
+    <rect x="6" width="24" height="20" fill="#01411C"/>
+    <circle cx="17" cy="10" r="4.5" fill="#fff"/>
+    <circle cx="18.5" cy="10" r="3.8" fill="#01411C"/>
+    <polygon points="22,8 21.5,9.5 23,9.5 21.8,10.5 22.2,12 22,10.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Afghanistan: schwarz-rot-gruen vertikal -->
+  <symbol id="flag-af" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#000"/>
+    <rect x="10" width="10" height="20" fill="#BE0000"/>
+    <rect x="20" width="10" height="20" fill="#007A36"/>
+  </symbol>
+
+  <!-- South Africa: vereinfacht gruenes Y -->
+  <symbol id="flag-za" viewBox="0 0 30 20">
+    <rect width="30" height="10" fill="#E03C31"/>
+    <rect y="10" width="30" height="10" fill="#007749"/>
+    <polygon points="0,0 10,10 0,20" fill="#007749"/>
+    <polygon points="0,2 8,10 0,18" fill="#FFB81C"/>
+    <polygon points="0,3 7,10 0,17" fill="#000"/>
+    <rect y="9" x="10" width="20" height="2" fill="#fff"/>
+  </symbol>
+
+  <!-- Tanzania: gruen-gelb-schwarz diagonal -->
+  <symbol id="flag-tz" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#1EB53A"/>
+    <polygon points="0,20 30,0 30,20" fill="#00A3DD"/>
+    <polygon points="0,14 30,0 30,6 0,20" fill="#000" stroke="#FCD116" stroke-width="1.5"/>
+  </symbol>
+
+  <!-- Ethiopia: gruen-gelb-rot horizontal -->
+  <symbol id="flag-et" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#078930"/>
+    <rect y="7" width="30" height="6" fill="#FCDD09"/>
+    <rect y="13" width="30" height="7" fill="#DA121A"/>
+    <circle cx="15" cy="10" r="3" fill="#0F47AF"/>
+    <polygon points="15,7.5 15.8,9.5 17.8,9.5 16,10.8 16.7,12.5 15,11.3 13.3,12.5 14,10.8 12.2,9.5 14.2,9.5" fill="#FCDD09"/>
+  </symbol>
+
+  <!-- Nigeria: gruen-weiss-gruen vertikal -->
+  <symbol id="flag-ng" viewBox="0 0 30 20">
+    <rect width="10" height="20" fill="#008751"/>
+    <rect x="10" width="10" height="20" fill="#fff"/>
+    <rect x="20" width="10" height="20" fill="#008751"/>
+  </symbol>
+
+  <!-- Zimbabwe: mehrfarbig vereinfacht -->
+  <symbol id="flag-zw" viewBox="0 0 30 20">
+    <rect width="30" height="3" fill="#006400"/>
+    <rect y="3" width="30" height="3" fill="#FFD200"/>
+    <rect y="6" width="30" height="3" fill="#EF3340"/>
+    <rect y="9" width="30" height="2" fill="#000"/>
+    <rect y="11" width="30" height="3" fill="#EF3340"/>
+    <rect y="14" width="30" height="3" fill="#FFD200"/>
+    <rect y="17" width="30" height="3" fill="#006400"/>
+    <polygon points="0,0 8,10 0,20" fill="#fff"/>
+  </symbol>
+
+  <!-- Somalia: blau mit weissem Stern -->
+  <symbol id="flag-so" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#4189DD"/>
+    <polygon points="15,4 16.5,8.5 21,8.5 17.5,11 18.8,15.5 15,12.5 11.2,15.5 12.5,11 9,8.5 13.5,8.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Madagascar: weiss-rot-gruen -->
+  <symbol id="flag-mg" viewBox="0 0 30 20">
+    <rect width="8" height="20" fill="#fff"/>
+    <rect x="8" width="22" height="10" fill="#FC3D32"/>
+    <rect x="8" y="10" width="22" height="10" fill="#007E3A"/>
+  </symbol>
+
+  <!-- Malawi: schwarz-rot-gruen horizontal -->
+  <symbol id="flag-mw" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#000"/>
+    <rect y="7" width="30" height="6" fill="#CE1126"/>
+    <rect y="13" width="30" height="7" fill="#339E35"/>
+    <circle cx="15" cy="3.5" r="3" fill="#CE1126"/>
+  </symbol>
+
+  <!-- Botswana: blau mit schwarzem Streifen -->
+  <symbol id="flag-bw" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#6DA9E4"/>
+    <rect y="7" width="30" height="1" fill="#fff"/>
+    <rect y="8" width="30" height="4" fill="#000"/>
+    <rect y="12" width="30" height="1" fill="#fff"/>
+  </symbol>
+
+  <!-- DR Congo: blau mit rotem Streifen -->
+  <symbol id="flag-cd" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#007FFF"/>
+    <polygon points="0,20 30,0 30,6 0,20" fill="#CE1021" stroke="#F7D618" stroke-width="1.5"/>
+    <polygon points="4,2 5,5 8,5 5.5,6.5 6.5,9.5 4,7.5 1.5,9.5 2.5,6.5 0,5 3,5" fill="#F7D618"/>
+  </symbol>
+
+  <!-- Ghana: rot-gelb-gruen mit schwarzem Stern -->
+  <symbol id="flag-gh" viewBox="0 0 30 20">
+    <rect width="30" height="7" fill="#CE1126"/>
+    <rect y="7" width="30" height="6" fill="#FCD116"/>
+    <rect y="13" width="30" height="7" fill="#006B3F"/>
+    <polygon points="15,8 15.8,10.5 18,10.5 16.2,11.8 16.8,14 15,12.5 13.2,14 13.8,11.8 12,10.5 14.2,10.5" fill="#000"/>
+  </symbol>
+
+  <!-- USA: vereinfacht blauer Kanton + Streifen -->
+  <symbol id="flag-us" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#fff"/>
+    <rect width="30" height="1.5" fill="#B22234"/>
+    <rect y="3" width="30" height="1.5" fill="#B22234"/>
+    <rect y="6" width="30" height="1.5" fill="#B22234"/>
+    <rect y="9" width="30" height="1.5" fill="#B22234"/>
+    <rect y="12" width="30" height="1.5" fill="#B22234"/>
+    <rect y="15" width="30" height="1.5" fill="#B22234"/>
+    <rect y="18" width="30" height="2" fill="#B22234"/>
+    <rect width="12" height="10.5" fill="#3C3B6E"/>
+    <circle cx="3" cy="2" r="0.6" fill="#fff"/>
+    <circle cx="6" cy="2" r="0.6" fill="#fff"/>
+    <circle cx="9" cy="2" r="0.6" fill="#fff"/>
+    <circle cx="3" cy="5" r="0.6" fill="#fff"/>
+    <circle cx="6" cy="5" r="0.6" fill="#fff"/>
+    <circle cx="9" cy="5" r="0.6" fill="#fff"/>
+    <circle cx="3" cy="8" r="0.6" fill="#fff"/>
+    <circle cx="6" cy="8" r="0.6" fill="#fff"/>
+    <circle cx="9" cy="8" r="0.6" fill="#fff"/>
+  </symbol>
+
+  <!-- New Zealand: blau mit roten Sternen (vereinfacht) -->
+  <symbol id="flag-nz" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#00247D"/>
+    <!-- Simplified Union Jack in canton -->
+    <rect width="12" height="8" fill="#00247D"/>
+    <path d="M0 0L12 8M12 0L0 8" stroke="#fff" stroke-width="1.5"/>
+    <path d="M0 0L12 8M12 0L0 8" stroke="#CF142B" stroke-width="0.8"/>
+    <path d="M6 0V8M0 4H12" stroke="#fff" stroke-width="2.5"/>
+    <path d="M6 0V8M0 4H12" stroke="#CF142B" stroke-width="1.5"/>
+    <!-- Southern Cross stars -->
+    <polygon points="22,5 22.5,6.5 24,6.5 22.8,7.5 23.2,9 22,8 20.8,9 21.2,7.5 20,6.5 21.5,6.5" fill="#CF142B"/>
+    <polygon points="25,10 25.3,11 26.3,11 25.5,11.6 25.8,12.5 25,12 24.2,12.5 24.5,11.6 23.7,11 24.7,11" fill="#CF142B"/>
+    <polygon points="23,14 23.3,15 24.3,15 23.5,15.6 23.8,16.5 23,16 22.2,16.5 22.5,15.6 21.7,15 22.7,15" fill="#CF142B"/>
+    <polygon points="19,11 19.3,12 20.3,12 19.5,12.6 19.8,13.5 19,13 18.2,13.5 18.5,12.6 17.7,12 18.7,12" fill="#CF142B"/>
+  </symbol>
+
+  <!-- Samoa: rot mit blauem Kanton -->
+  <symbol id="flag-ws" viewBox="0 0 30 20">
+    <rect width="30" height="20" fill="#CE1126"/>
+    <rect width="12" height="10" fill="#002B7F"/>
+    <polygon points="6,2 6.5,3.5 8,3.5 6.8,4.5 7.2,6 6,5 4.8,6 5.2,4.5 4,3.5 5.5,3.5" fill="#fff"/>
+    <circle cx="8" cy="7" r="0.6" fill="#fff"/>
+  </symbol>
+
+  <!-- French Polynesia: vereinfacht rot-weiss-rot -->
+  <symbol id="flag-pf" viewBox="0 0 30 20">
+    <rect width="30" height="5" fill="#EF3340"/>
+    <rect y="5" width="30" height="10" fill="#fff"/>
+    <rect y="15" width="30" height="5" fill="#EF3340"/>
+    <circle cx="15" cy="10" r="3" fill="#FFCD00" stroke="#EF3340" stroke-width="0.5"/>
+  </symbol>
+
+  <!-- Vatican: gelb-weiss vertikal -->
+  <symbol id="flag-va" viewBox="0 0 30 20">
+    <rect width="15" height="20" fill="#FFE000"/>
+    <rect x="15" width="15" height="20" fill="#fff"/>
+  </symbol>
+
+</svg>

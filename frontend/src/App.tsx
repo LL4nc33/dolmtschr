@@ -3,7 +3,8 @@ import { Layout, DarkModeToggle, InstallPrompt, Button } from '@oidanice/ink-ui'
 import { useSettings } from './hooks/useSettings'
 import { useSession } from './hooks/useSession'
 import { useMessages } from './hooks/useMessages'
-import { getMessages, listSessions, deleteSession, getLanguageCoverage, SessionResponse, type LanguageCoverage } from './api/dolmtschr'
+import { useLanguages } from './hooks/useLanguages'
+import { getMessages, listSessions, deleteSession, SessionResponse } from './api/dolmtschr'
 import { Home } from './pages/Home'
 import { Settings } from './pages/Settings'
 import { ChatSidebar } from './components/ChatSidebar'
@@ -23,7 +24,7 @@ export function App() {
   const { settings, update } = useSettings()
   const { session, create: createSession, load: loadSession, clear: clearSession } = useSession()
   const { messages, append: appendMessage, clear: clearMessages } = useMessages()
-  const [coverage, setCoverage] = useState<LanguageCoverage | undefined>(undefined)
+  const { languages, byContinent, continents } = useLanguages(settings.ttsChain, settings.translateChain)
 
   const navigate = useCallback((p: Page) => {
     window.location.hash = p === 'home' ? '' : p
@@ -49,12 +50,6 @@ export function App() {
   useEffect(() => {
     refreshSessions()
   }, [refreshSessions])
-
-  useEffect(() => {
-    getLanguageCoverage(settings.ttsChain, settings.translateChain)
-      .then(setCoverage)
-      .catch((e) => console.warn('getLanguageCoverage failed', e))
-  }, [settings.ttsChain, settings.translateChain])
 
   const handleNewSession = useCallback(async () => {
     const s = await createSession(
@@ -153,7 +148,9 @@ export function App() {
           {page === 'home' && (
             <Home
               settings={settings}
-              coverage={coverage}
+              languages={languages}
+              byContinent={byContinent}
+              continents={continents}
               onSourceChange={(lang) => update({ sourceLang: lang })}
               onTargetChange={(lang) => update({ targetLang: lang })}
               sessionId={session?.id ?? null}
