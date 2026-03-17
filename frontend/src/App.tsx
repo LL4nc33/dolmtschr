@@ -144,7 +144,7 @@ export function App() {
               <span className="hidden md:inline">[ settings ]</span>
               <span className="md:hidden">[s]</span>
             </button>
-            <DarkModeToggle />
+            <span className="hidden md:flex"><DarkModeToggle /></span>
           </div>
         }
         banner={<InstallPrompt />}
@@ -190,14 +190,20 @@ export function App() {
             onClick={() => setSidebarOpen(false)}
           />
           <div
-            className="absolute inset-y-0 left-0 w-72 overflow-y-auto"
+            className="absolute inset-y-0 left-0 w-72 overflow-y-auto flex flex-col"
             style={{
               backgroundColor: 'var(--bg)',
               borderRight: '1px solid var(--border)',
               animation: 'slideIn 0.2s ease-out',
             }}
           >
-            {sidebar}
+            <div className="flex-1 overflow-y-auto">
+              {sidebar}
+            </div>
+            <div className="p-3 flex items-center justify-between" style={{ borderTop: '1px solid var(--border)' }}>
+              <span className="font-mono text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>theme</span>
+              <DarkModeToggle />
+            </div>
           </div>
         </div>
       )}

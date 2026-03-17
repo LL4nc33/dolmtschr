@@ -97,6 +97,7 @@ export function Home({ settings, languages, byContinent, continents, onSourceCha
             sttMs={result.sttMs}
             translateMs={result.translateMs}
             ttsMs={result.ttsMs}
+            modelUsed={result.modelUsed}
           />
           <ResultActions onRetry={handleRetry} onReset={handleReset} />
         </>

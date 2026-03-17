@@ -26,6 +26,7 @@ interface PipelineResponse {
   stt_ms: number | null
   translate_ms: number | null
   tts_ms: number | null
+  model_used: string | null
 }
 
 // --- Chat History Types ---
@@ -97,6 +98,7 @@ export interface LanguageCoverageEntry {
   tts_provider: string | null
   translate_provider: string | null
   tts_badge: 'voice' | 'text-only'
+  recommended_model: string | null
 }
 
 export interface LanguageCoverage {

@@ -55,6 +55,13 @@ _TRANSLATE_PROVIDERS: dict[str, set[str] | None] = {
 }
 
 
+def get_recommended_model(lang: str) -> str | None:
+    """Return the recommended Ollama model for a language, or None."""
+    from backend.providers.language_registry import LANGUAGES
+    meta = LANGUAGES.get(lang)
+    return meta.recommended_model if meta else None
+
+
 def get_supported_languages(provider: str) -> set[str] | None:
     """Return supported language codes for a provider, or None if universal."""
     if provider in _TTS_PROVIDERS:
@@ -141,6 +148,7 @@ def get_language_coverage(
             "tts_provider": tts_prov,
             "translate_provider": trans_prov,
             "tts_badge": badge,
+            "recommended_model": meta.recommended_model,
         }
 
     return {

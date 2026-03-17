@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Card, Divider, Select, FilterChip } from '@oidanice/ink-ui'
+import { Card, Divider, Select, FilterChip, Button } from '@oidanice/ink-ui'
 import { getConfig } from '../api/dolmtschr'
 import { useProviderHealth } from '../hooks/useProviderHealth'
+import { useAuth } from '../hooks/useAuth'
 import { ProviderStatusGrid } from '../components/settings/ProviderStatusGrid'
 import { GpuMonitor } from '../components/settings/GpuMonitor'
 import { CloudUsage } from '../components/settings/CloudUsage'
@@ -44,15 +45,55 @@ export function Settings({ settings, update }: SettingsProps) {
   const [config, setConfig] = useState<BackendConfig | null>(null)
   const [activeTab, setActiveTab] = useState<ProviderTab>('stt')
   const health = useProviderHealth(settings.ollamaUrl || undefined, settings.chatterboxUrl || undefined)
+  const auth = useAuth()
 
   useEffect(() => {
     getConfig().then(setConfig).catch((e) => console.warn('getConfig failed', e))
     health.refresh()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Auth gate: if auth is enabled and user is not admin, show login prompt
+  if (auth.authEnabled && !auth.loading && !auth.isAdmin) {
+    return (
+      <div className="space-y-4">
+        <h2 className="font-serif text-xl">Settings</h2>
+        <Card>
+          <div className="text-center space-y-3 py-4">
+            <p className="font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Admin access required to view settings.
+            </p>
+            {auth.user ? (
+              <p className="font-mono text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
+                Logged in as <strong>{auth.user.display_name}</strong> (no admin privileges)
+              </p>
+            ) : (
+              <Button onClick={auth.login}>Login with Gitea</Button>
+            )}
+          </div>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
-      <h2 className="font-serif text-xl">Settings</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="font-serif text-xl">Settings</h2>
+        {auth.authEnabled && auth.user && (
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs" style={{ color: 'var(--text-secondary)' }}>
+              {auth.user.display_name}
+            </span>
+            <button
+              className="font-mono text-xs border-0 bg-transparent cursor-pointer"
+              style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
+              onClick={auth.logout}
+            >
+              [logout]
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* ── Dashboard ── */}
       <ProviderStatusGrid

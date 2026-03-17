@@ -12,6 +12,7 @@ interface TranscriptBubbleProps {
   sttMs: number | null
   translateMs: number | null
   ttsMs: number | null
+  modelUsed?: string | null
 }
 
 export function TranscriptBubble(props: TranscriptBubbleProps) {
@@ -26,6 +27,7 @@ export function TranscriptBubble(props: TranscriptBubbleProps) {
         autoPlay={props.autoPlay}
         translateMs={props.translateMs}
         ttsMs={props.ttsMs}
+        modelUsed={props.modelUsed}
       />
     </div>
   )
@@ -48,8 +50,8 @@ function OriginalBubble({ text, lang, sttMs }: { text: string; lang: string; stt
   )
 }
 
-function TranslationBubble({ text, lang, audioBase64, audioFormat, autoPlay, translateMs, ttsMs }: {
-  text: string; lang: string; audioBase64: string | null; audioFormat: string; autoPlay?: boolean; translateMs: number | null; ttsMs: number | null
+function TranslationBubble({ text, lang, audioBase64, audioFormat, autoPlay, translateMs, ttsMs, modelUsed }: {
+  text: string; lang: string; audioBase64: string | null; audioFormat: string; autoPlay?: boolean; translateMs: number | null; ttsMs: number | null; modelUsed?: string | null
 }) {
   const clip = useClipboard()
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -83,6 +85,7 @@ function TranslationBubble({ text, lang, audioBase64, audioFormat, autoPlay, tra
   const timing = [
     translateMs != null && `${(translateMs / 1000).toFixed(1)}s translate`,
     ttsMs != null && `${(ttsMs / 1000).toFixed(1)}s TTS`,
+    modelUsed && modelUsed,
   ].filter(Boolean).join(' · ')
 
   return (

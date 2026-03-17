@@ -23,6 +23,7 @@ interface Result {
   sttMs: number | null
   translateMs: number | null
   ttsMs: number | null
+  modelUsed: string | null
 }
 
 interface UsePipelineOptions {
@@ -142,6 +143,7 @@ export function usePipeline(opts: UsePipelineOptions): UsePipelineReturn {
         sttMs: res.stt_ms,
         translateMs: res.translate_ms,
         ttsMs: res.tts_ms,
+        modelUsed: res.model_used,
       })
       setPhase('result')
 

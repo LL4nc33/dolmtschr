@@ -65,6 +65,7 @@ class PipelineResponse(BaseModel):
     stt_ms: int | None = None
     translate_ms: int | None = None
     tts_ms: int | None = None
+    model_used: str | None = None
 
 
 class ConfigResponse(BaseModel):

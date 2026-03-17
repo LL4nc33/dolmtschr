@@ -46,6 +46,19 @@ class Settings(BaseSettings):
     def translate_chain_list(self) -> list[str]:
         return [p.strip() for p in self.translate_chain.split(",") if p.strip()]
 
+    # Auth (OAuth2 via Gitea)
+    auth_enabled: bool = False
+    auth_gitea_url: str = ""           # e.g. https://gitea.example.com
+    auth_client_id: str = ""
+    auth_client_secret: str = ""
+    auth_admin_users: str = "Admin_Lance,LL4nc33"  # comma-separated Gitea usernames
+    auth_session_secret: str = "change-me-in-production"
+    auth_site_url: str = ""            # e.g. https://dolmtschr.example.com
+
+    @property
+    def auth_admin_list(self) -> list[str]:
+        return [u.strip() for u in self.auth_admin_users.split(",") if u.strip()]
+
     # CORS
     cors_origins: str = "http://localhost:5173,http://localhost:4173"
 

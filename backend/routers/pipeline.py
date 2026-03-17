@@ -198,7 +198,11 @@ async def full_pipeline(
     if not text.strip():
         raise HTTPException(status_code=400, detail="No speech detected")
 
-    # 2. Translate — mit optionalem Profil-System-Prompt
+    # 2. Translate — auto-select model per language if none specified
+    if not model and not provider:
+        from backend.providers.language_support import get_recommended_model
+        model = get_recommended_model(target_lang) or get_settings().ollama_model
+
     t0 = time.perf_counter()
     translator, ad_hoc = resolve_translate(provider, api_url, api_key, model, ollama_url, deepl_free)
 
@@ -296,6 +300,8 @@ async def full_pipeline(
         _background_tasks.add(task)
         task.add_done_callback(_background_tasks.discard)
 
+    model_used = model or (s.ollama_model if (provider or s.translate_provider) == "local" else provider or s.translate_provider)
+
     return PipelineResponse(
         original_text=text,
         detected_language=detected_lang,
@@ -306,4 +312,5 @@ async def full_pipeline(
         stt_ms=stt_ms,
         translate_ms=translate_ms,
         tts_ms=tts_ms,
+        model_used=model_used,
     )

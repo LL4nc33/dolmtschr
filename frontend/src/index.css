@@ -93,7 +93,6 @@
 .lang-dropdown {
   position: absolute;
   top: calc(100% + 4px);
-  left: 0;
   min-width: 260px;
   max-width: calc(100vw - 24px);
   max-height: 60vh;
@@ -104,6 +103,12 @@
   box-shadow: 4px 4px 0 var(--border);
   z-index: 50;
   padding: 4px;
+}
+.lang-dropdown--left {
+  left: 0;
+}
+.lang-dropdown--right {
+  right: 0;
 }
 .lang-dropdown-item {
   display: flex;

@@ -20,6 +20,7 @@ class Language:
     stt_quality: int       # 0-100, inverted Whisper WER (100 = perfect)
     translate_tier: str    # "excellent" / "good" / "fair" / "poor" / "experimental"
     resource_level: str    # "high" / "mid" / "low" / "very-low"
+    recommended_model: str | None = None  # Ollama model best suited for this language
 
 
 CONTINENTS: dict[str, str] = {
@@ -41,6 +42,7 @@ def _lang(
     stt_quality: int = 50,
     translate_tier: str = "experimental",
     resource_level: str = "very-low",
+    recommended_model: str | None = "translategemma:4b",
 ) -> Language:
     return Language(
         code=code,
@@ -51,20 +53,21 @@ def _lang(
         stt_quality=stt_quality,
         translate_tier=translate_tier,
         resource_level=resource_level,
+        recommended_model=recommended_model,
     )
 
 
 LANGUAGES: dict[str, Language] = {
     # -- Europa (EU) --
-    "de": _lang("de", "German", "Deutsch", "EU", "at", 94, "excellent", "high"),
-    "en": _lang("en", "English", "English", "EU", "gb", 95, "excellent", "high"),
-    "fr": _lang("fr", "French", "Français", "EU", "fr", 88, "excellent", "high"),
-    "es": _lang("es", "Spanish", "Español", "EU", "es", 96, "excellent", "high"),
-    "it": _lang("it", "Italian", "Italiano", "EU", "it", 95, "excellent", "high"),
-    "pt": _lang("pt", "Portuguese", "Português", "EU", "pt", 92, "excellent", "high"),
-    "nl": _lang("nl", "Dutch", "Nederlands", "EU", "nl", 96, "excellent", "high"),
-    "pl": _lang("pl", "Polish", "Polski", "EU", "pl", 92, "excellent", "high"),
-    "ru": _lang("ru", "Russian", "Русский", "EU", "ru", 93, "excellent", "high"),
+    "de": _lang("de", "German", "Deutsch", "EU", "at", 94, "excellent", "high", "translategemma:12b"),
+    "en": _lang("en", "English", "English", "EU", "gb", 95, "excellent", "high", "translategemma:12b"),
+    "fr": _lang("fr", "French", "Français", "EU", "fr", 88, "excellent", "high", "translategemma:12b"),
+    "es": _lang("es", "Spanish", "Español", "EU", "es", 96, "excellent", "high", "translategemma:12b"),
+    "it": _lang("it", "Italian", "Italiano", "EU", "it", 95, "excellent", "high", "translategemma:12b"),
+    "pt": _lang("pt", "Portuguese", "Português", "EU", "pt", 92, "excellent", "high", "translategemma:12b"),
+    "nl": _lang("nl", "Dutch", "Nederlands", "EU", "nl", 96, "excellent", "high", "translategemma:12b"),
+    "pl": _lang("pl", "Polish", "Polski", "EU", "pl", 92, "excellent", "high", "translategemma:12b"),
+    "ru": _lang("ru", "Russian", "Русский", "EU", "ru", 93, "excellent", "high", "translategemma:12b"),
     "uk": _lang("uk", "Ukrainian", "Українська", "EU", "ua", 85, "good", "mid"),
     "cs": _lang("cs", "Czech", "Čeština", "EU", "cz", 90, "good", "mid"),
     "sk": _lang("sk", "Slovak", "Slovenčina", "EU", "sk", 78, "good", "mid"),
@@ -102,13 +105,13 @@ LANGUAGES: dict[str, Language] = {
     "fo": _lang("fo", "Faroese", "Føroyskt", "EU", "fo", 55, "experimental", "very-low"),
     "yi": _lang("yi", "Yiddish", "ייִדיש", "EU", "il", 45, "experimental", "very-low"),
     # -- Asien (AS) --
-    "zh": _lang("zh", "Chinese", "中文", "AS", "cn", 88, "excellent", "high"),
-    "ja": _lang("ja", "Japanese", "日本語", "AS", "jp", 89, "excellent", "high"),
-    "ko": _lang("ko", "Korean", "한국어", "AS", "kr", 95, "excellent", "high"),
-    "hi": _lang("hi", "Hindi", "हिन्दी", "AS", "in", 80, "good", "mid"),
+    "zh": _lang("zh", "Chinese", "中文", "AS", "cn", 88, "excellent", "high", "qwen3.5:9b"),
+    "ja": _lang("ja", "Japanese", "日本語", "AS", "jp", 89, "excellent", "high", "qwen3.5:9b"),
+    "ko": _lang("ko", "Korean", "한국어", "AS", "kr", 95, "excellent", "high", "qwen3.5:9b"),
+    "hi": _lang("hi", "Hindi", "हिन्दी", "AS", "in", 80, "good", "mid", "qwen3.5:9b"),
     "bn": _lang("bn", "Bengali", "বাংলা", "AS", "bd", 72, "fair", "low"),
-    "th": _lang("th", "Thai", "ไทย", "AS", "th", 94, "good", "mid"),
-    "vi": _lang("vi", "Vietnamese", "Tiếng Việt", "AS", "vn", 73, "good", "mid"),
+    "th": _lang("th", "Thai", "ไทย", "AS", "th", 94, "good", "mid", "qwen3.5:9b"),
+    "vi": _lang("vi", "Vietnamese", "Tiếng Việt", "AS", "vn", 73, "good", "mid", "qwen3.5:9b"),
     "id": _lang("id", "Indonesian", "Bahasa Indonesia", "AS", "id", 92, "good", "mid"),
     "ms": _lang("ms", "Malay", "Bahasa Melayu", "AS", "my", 85, "good", "mid"),
     "tl": _lang("tl", "Tagalog", "Tagalog", "AS", "ph", 65, "fair", "low"),
@@ -140,7 +143,7 @@ LANGUAGES: dict[str, Language] = {
     "ceb": _lang("ceb", "Cebuano", "Cebuano", "AS", "ph", 45, "experimental", "very-low"),
     "fil": _lang("fil", "Filipino", "Filipino", "AS", "ph", 65, "fair", "low"),
     # -- Naher Osten (ME) --
-    "ar": _lang("ar", "Arabic", "العربية", "ME", "sa", 83, "excellent", "high"),
+    "ar": _lang("ar", "Arabic", "العربية", "ME", "sa", 83, "excellent", "high", "command-r7b-arabic"),
     "fa": _lang("fa", "Persian", "فارسی", "ME", "ir", 74, "fair", "low"),
     "tr": _lang("tr", "Turkish", "Türkçe", "ME", "tr", 87, "good", "mid"),
     "he": _lang("he", "Hebrew", "עברית", "ME", "il", 77, "good", "mid"),

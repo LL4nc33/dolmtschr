@@ -85,6 +85,7 @@ export function LanguageSelector({
           languages={languages}
           byContinent={byContinent}
           continents={continents}
+          position="right"
         />
       </div>
       {isTextOnly && (
@@ -103,9 +104,10 @@ interface LangChipProps {
   byContinent: Record<string, LanguageOption[]>
   continents: Record<string, string>
   includeAuto?: boolean
+  position?: 'left' | 'right'
 }
 
-function LangChip({ value, onChange, languages, byContinent, continents, includeAuto }: LangChipProps) {
+function LangChip({ value, onChange, languages, byContinent, continents, includeAuto, position = 'left' }: LangChipProps) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [expandedCode, setExpandedCode] = useState<string | null>(null)
@@ -160,7 +162,7 @@ function LangChip({ value, onChange, languages, byContinent, continents, include
         <span className="text-xs" style={{ opacity: 0.5 }}>▾</span>
       </button>
       {open && (
-        <div className="lang-dropdown">
+        <div className={`lang-dropdown lang-dropdown--${position}`}>
           <div style={{ padding: '4px 4px 8px' }}>
             <input
               ref={searchRef}

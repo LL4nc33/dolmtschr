@@ -133,6 +133,11 @@ app.include_router(search.router)
 app.include_router(retention.router)
 app.include_router(languages.router)
 
+# Auth (OAuth2 via Gitea, opt-in)
+if Settings().auth_enabled:
+    from backend.auth import router as auth_router
+    app.include_router(auth_router)
+
 # Gateway (v1 API for external clients)
 if Settings().gateway_enabled:
     from backend.gateway.router import gateway_router
