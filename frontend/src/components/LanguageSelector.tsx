@@ -265,8 +265,19 @@ function DropdownItem({ lang, active, showContinent, expanded, onToggleQuality, 
           <TtsBadge badge={lang.ttsBadge} />
         </button>
         <button
-          className="font-mono text-xs px-2"
-          style={{ color: 'var(--text-secondary)', opacity: expanded ? 1 : 0.4, background: 'none', border: 'none', cursor: 'pointer' }}
+          className="font-mono shrink-0"
+          style={{
+            width: 20, height: 20,
+            borderRadius: '50%',
+            border: '1px solid var(--border)',
+            background: expanded ? 'var(--text)' : 'none',
+            color: expanded ? 'var(--bg)' : 'var(--text-secondary)',
+            fontSize: 11,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer',
+            opacity: expanded ? 1 : 0.5,
+            marginLeft: 4,
+          }}
           onClick={(e) => { e.stopPropagation(); onToggleQuality?.() }}
           aria-label="Show quality info"
         >
