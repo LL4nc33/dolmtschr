@@ -99,6 +99,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "microphone=(self), camera=()"
+    # CSP: allow self + inline styles (Tailwind) + blob/data for audio
+    if not request.url.path.startswith("/api/"):
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: blob:; "
+            "media-src 'self' data: blob:; "
+            "connect-src 'self'; "
+            "worker-src 'self'; "
+            "manifest-src 'self'"
+        )
+    return response
+
+
 app.include_router(stt.router)
 app.include_router(tts.router)
 app.include_router(translate.router)
