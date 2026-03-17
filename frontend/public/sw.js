@@ -1,5 +1,5 @@
-const CACHE_NAME = 'dolmtschr-v2';
-const API_CACHE_NAME = 'dolmtschr-api-v1';
+const CACHE_NAME = 'dolmtschr-v3';
+const API_CACHE_NAME = 'dolmtschr-api-v2';
 
 const STATIC_ASSETS = [
   '/',
@@ -68,12 +68,14 @@ self.addEventListener('fetch', (event) => {
 function handleApiRequest(event, url) {
   const path = url.pathname;
 
-  // Network-only: pipeline, stt, tts, health
+  // Network-only: non-GET requests, pipeline, stt, tts, health, auth
   if (
+    event.request.method !== 'GET' ||
     path.startsWith('/api/pipeline') ||
     path.startsWith('/api/stt') ||
     path.startsWith('/api/tts') ||
-    path.startsWith('/api/health')
+    path.startsWith('/api/health') ||
+    path.startsWith('/api/auth')
   ) {
     // Let the browser handle it normally (network-only)
     return;
