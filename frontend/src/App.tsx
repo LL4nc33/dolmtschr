@@ -134,7 +134,7 @@ export function App() {
               onClick={() => navigate('home')}
             >
               <span className="hidden md:inline">[ home ]</span>
-              <span className="md:hidden text-base">&#8962;</span>
+              <span className="md:hidden">[h]</span>
             </button>
             <button
               className="border-0 bg-transparent cursor-pointer font-mono min-w-[36px] min-h-[36px] md:min-w-[44px] md:min-h-[44px] flex items-center justify-center text-xs md:p-2"
@@ -142,7 +142,7 @@ export function App() {
               onClick={() => navigate('settings')}
             >
               <span className="hidden md:inline">[ settings ]</span>
-              <span className="md:hidden text-base">&#9881;</span>
+              <span className="md:hidden">[s]</span>
             </button>
             <DarkModeToggle />
           </div>
