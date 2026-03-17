@@ -83,7 +83,7 @@ export function Layout({
         className="px-3 py-3 md:px-6 md:py-6 flex items-center justify-between"
         style={{ borderBottom: '1px solid var(--border)' }}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           {headerLeft}
           {title && (
             <h1 className="font-serif text-xl md:text-2xl font-light tracking-wider leading-tight">

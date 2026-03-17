@@ -117,7 +117,7 @@ export function App() {
       <Layout
         headerLeft={
           <button
-            className="md:hidden border-0 bg-transparent cursor-pointer p-2 font-mono text-base min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="md:hidden border-0 bg-transparent cursor-pointer p-1 font-mono text-base min-w-[36px] min-h-[36px] flex items-center justify-center"
             style={{ color: 'var(--text)' }}
             onClick={() => setSidebarOpen(true)}
             aria-label="Open sidebar"
@@ -127,22 +127,22 @@ export function App() {
         }
         title="dolmtschr"
         headerRight={
-          <div className="flex items-center gap-3 md:gap-3">
+          <div className="flex items-center gap-1 md:gap-3">
             <button
-              className="border-0 bg-transparent cursor-pointer font-mono min-w-[44px] min-h-[44px] flex items-center justify-center text-xs md:p-2"
+              className="border-0 bg-transparent cursor-pointer font-mono min-w-[36px] min-h-[36px] md:min-w-[44px] md:min-h-[44px] flex items-center justify-center text-xs md:p-2"
               style={{ color: page === 'home' ? 'var(--primary, #3b82f6)' : 'var(--text)', opacity: page === 'home' ? 1 : 0.6 }}
               onClick={() => navigate('home')}
             >
               <span className="hidden md:inline">[ home ]</span>
-              <span className="md:hidden text-lg">&#9679;</span>
+              <span className="md:hidden text-base">&#9679;</span>
             </button>
             <button
-              className="border-0 bg-transparent cursor-pointer font-mono min-w-[44px] min-h-[44px] flex items-center justify-center text-xs md:p-2"
+              className="border-0 bg-transparent cursor-pointer font-mono min-w-[36px] min-h-[36px] md:min-w-[44px] md:min-h-[44px] flex items-center justify-center text-xs md:p-2"
               style={{ color: page === 'settings' ? 'var(--primary, #3b82f6)' : 'var(--text)', opacity: page === 'settings' ? 1 : 0.6 }}
               onClick={() => navigate('settings')}
             >
               <span className="hidden md:inline">[ settings ]</span>
-              <span className="md:hidden text-lg">&#9881;</span>
+              <span className="md:hidden text-base">&#9881;</span>
             </button>
             <DarkModeToggle />
           </div>
