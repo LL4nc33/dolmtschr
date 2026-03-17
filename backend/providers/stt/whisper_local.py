@@ -64,6 +64,7 @@ class WhisperLocalProvider(STTProvider):
                     language=language,
                     beam_size=5,
                     vad_filter=True,
+                    vad_parameters={"threshold": 0.3},
                 )
                 text = " ".join(seg.text.strip() for seg in segments)
                 detected_lang = info.language or language or "unknown"
