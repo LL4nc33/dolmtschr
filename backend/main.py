@@ -106,7 +106,7 @@ async def security_headers(request, call_next):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    response.headers["Permissions-Policy"] = "microphone=(self), camera=()"
+    response.headers["Permissions-Policy"] = "camera=()"
     # CSP: allow self + inline for Vite's module preload polyfill + Tailwind styles
     if not request.url.path.startswith("/api/"):
         response.headers["Content-Security-Policy"] = (
