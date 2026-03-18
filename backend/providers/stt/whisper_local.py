@@ -58,6 +58,7 @@ class WhisperLocalProvider(STTProvider):
             tmp.flush()
 
             try:
+                # First attempt: with VAD filter
                 segments, info = await asyncio.to_thread(
                     model.transcribe,
                     tmp.name,
@@ -68,6 +69,20 @@ class WhisperLocalProvider(STTProvider):
                 )
                 text = " ".join(seg.text.strip() for seg in segments)
                 detected_lang = info.language or language or "unknown"
+
+                # If VAD filtered everything, retry without VAD
+                if not text.strip():
+                    logger.info("VAD filtered all audio, retrying without VAD (%d bytes)", len(audio))
+                    segments, info = await asyncio.to_thread(
+                        model.transcribe,
+                        tmp.name,
+                        language=language,
+                        beam_size=5,
+                        vad_filter=False,
+                    )
+                    text = " ".join(seg.text.strip() for seg in segments)
+                    detected_lang = info.language or language or "unknown"
+
             except ValueError:
                 logger.warning("Whisper could not process audio (%d bytes)", len(audio))
                 return "", language or "unknown"
