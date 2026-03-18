@@ -180,11 +180,25 @@ async def full_pipeline(
     # 1. STT
     t0 = time.perf_counter()
     audio = await file.read()
+    logger.info("Pipeline: received audio %d bytes, content_type=%s, filename=%s",
+                len(audio), file.content_type, file.filename)
     if len(audio) > MAX_AUDIO_BYTES:
         raise HTTPException(
             status_code=413,
             detail=f"Audio too large ({len(audio)} bytes, max {MAX_AUDIO_BYTES})",
         )
+    # Debug: probe audio format
+    if len(audio) < 50_000:
+        import tempfile as _tmpmod
+        with _tmpmod.NamedTemporaryFile(suffix=".webm", delete=True) as _dbg:
+            _dbg.write(audio)
+            _dbg.flush()
+            _probe = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_format", "-show_streams", _dbg.name],
+                capture_output=True, text=True, timeout=5,
+            )
+            logger.info("ffprobe output:\n%s", _probe.stdout or _probe.stderr)
+
     try:
         text, detected_lang = await get_stt().transcribe(audio, source_lang)
     except Exception as exc:
