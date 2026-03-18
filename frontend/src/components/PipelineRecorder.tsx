@@ -34,6 +34,7 @@ export function PipelineRecorder({ onProcess, disabled, autoStart, onRecordingSt
   useEffect(() => {
     if (recorder.blob && recorder.blob !== processedRef.current) {
       processedRef.current = recorder.blob
+      console.log('[PipelineRecorder] blob size:', recorder.blob.size, 'type:', recorder.blob.type)
       onProcess(recorder.blob)
       recorder.reset()
     }

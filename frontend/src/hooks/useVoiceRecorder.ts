@@ -56,11 +56,13 @@ export function useVoiceRecorder() {
 
       chunks.current = []
       recorder.ondataavailable = (e) => {
+        console.log('[Recorder] chunk:', e.data.size, 'bytes')
         if (e.data.size > 0) chunks.current.push(e.data)
       }
 
       recorder.onstop = () => {
         clearTimer()
+        console.log('[Recorder] stop: chunks:', chunks.current.length, 'total:', chunks.current.reduce((a, b) => a + b.size, 0), 'bytes')
         const blob = new Blob(chunks.current, { type: recorder.mimeType })
         stream.getTracks().forEach((t) => t.stop())
         const url = URL.createObjectURL(blob)
@@ -75,7 +77,7 @@ export function useVoiceRecorder() {
         }))
       }
 
-      recorder.start()
+      recorder.start(250)  // 250ms timeslice for regular data chunks
       mediaRecorder.current = recorder
 
       setState({ isRecording: true, blob: null, audioUrl: null, duration: 0, error: null, stream })
